@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
-
+use Faker\Factory as Faker;
 class userController extends Controller
 {
     /**
@@ -25,7 +25,10 @@ class userController extends Controller
      */
     public function create()
     {
-        //
+        $faker = Faker::create();
+        return view('auth.register',[
+            'name' => $faker->unique()->name()
+        ]);
     }
 
     /**

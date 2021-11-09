@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\blogController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\konsultasiController;
-use App\Http\Controllers\roleController;
-use App\Http\Controllers\storyController;
-use App\Http\Controllers\userController;
-use App\Http\Controllers\saveController;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\blogController;
+use App\Http\Controllers\roleController;
+use App\Http\Controllers\saveController;
+use App\Http\Controllers\userController;
+use App\Http\Controllers\storyController;
+use App\Http\Controllers\konsultasiController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[storyController::class, 'showAll'])->name('showAllStory');
 Route::get('/story/{slug}', [storyController::class, 'show'])->name('showstory');    
-
+Route::get('/register',[userController::class,'create'])->name('registers');
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->middleware(['guest:' . config('fortify.guard')])->name('registers');
 // user
 Route::group(['prefix' => 'dashboard',  'middleware' => 'auth:sanctum'], function () {
     //story

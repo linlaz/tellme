@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category as ModelsCategory;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -46,12 +47,69 @@ class DatabaseSeeder extends Seeder
         $deletepermission = Permission::create([
             'name' => 'delete-permission'
         ]);
+        $edituser = Permission::create([
+            'name' => 'edit-user'
+        ]);
+        $giveroleuser = Permission::create([
+            'name' => 'giverole-user'
+        ]);
+        $givepermissionuser = Permission::create([
+            'name' => 'givepermission-user'
+        ]);
+        $blokuser = Permission::create([
+            'name' => 'blok-user'
+        ]);
+        $deleteuser = Permission::create([
+            'name' => 'delete-user'
+        ]);
+        $unpublishblog = Permission::create([
+            'name' => 'unpublish-blog'
+        ]);
+        $publishblog = Permission::create([
+            'name' => 'publish-blog'
+        ]);
+        $editblog = Permission::create([
+            'name' => 'edit-blog'
+        ]);
+        $deleteblog = Permission::create([
+            'name' => 'delete-blog'
+        ]);
+        $historyblog = Permission::create([
+            'name' => 'history-blog'
+        ]);
+        $deletecategory = Permission::create([
+            'name' => 'delete-category'
+        ]);
+        $addblog = Permission::create([
+            'name' => 'add-blog'
+        ]);
+        $addstory = Permission::create([
+            'name' => 'add-story'
+        ]);
+        $publishstory = Permission::create([
+            'name' => 'publish-story'
+        ]);
+        $unpublishstory = Permission::create([
+            'name' => 'unpublish-story'
+        ]);
+        $editstory = Permission::create([
+            'name' => 'edit-story'
+        ]);
+        $deletestory = Permission::create([
+            'name' => 'delete-story'
+        ]);
         $admin->givePermissionTo(['add-role', 'edit-role', 'delete-role', 'add-permission', 'edit-permission', 'delete-permission']);
 
         ModelsCategory::create([
             'name' => 'mental health',
             'slug' => 'mental-health'
         ]);
-    
+
+        $user = User::create([
+            'name' => 'lintang lazuardi',
+            'email' => 'lazuardilintang@apps.ipb.ac.id',
+            'password' => bcrypt('linlaz11')
+        ]);
+        $user->assignRole('admin');
     }
 }

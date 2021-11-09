@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <p>ingin bercerita ??</p>
                     <p>cerita ga nambah beban ke orang lain kok</p>
-                    <p>gasinnn aja <a href="">kesini</a></p>
+                    <p>gasinnn aja <a href="/addstory">kesini</a></p>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
                         <p class="blog-post-meta">{{ $item->created_at }}</p>
                         <div class="mb-3">
                         @isset($item->stories)
-                            {!! Str::limit($item->stories, 10, '...') !!}<a href="story/{{ $item->slug }}">[lanjutkan]</a>
+                            {!! Str::limit($item->stories, 10, '...') !!}<a href="story/{{ $item->slug }}">[read complete]</a>
                         @endisset
                         </div>
                         <div>

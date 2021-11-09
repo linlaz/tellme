@@ -7,7 +7,8 @@ use App\Models\Story;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Faker\Factory as Faker;
+
 class storyController extends Controller
 {
     /**
@@ -38,9 +39,12 @@ class storyController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $limit = Str::limit(strip_tags($request->story), 20);
-        $slug = Str::of($limit)->slug('-') . rand();
+        $faker = Faker::create();
+        $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
+        $find = Story::Where('slug',$slug)->first();
+        if($find){
+            $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
+        }
         Story::create([
             'slug' => $slug,
             'choice' => $request->choice,
@@ -49,9 +53,17 @@ class storyController extends Controller
             'views' => 0,
             'stories' => $request->story,
         ]);
-
+        // $limit = Str::limit(strip_tags($request->story), 20);
+        // $slug = Str::of($limit)->slug('-') . rand();
+        // Story::create([
+        //     'slug' => $slug,
+        //     'choice' => $request->choice,
+        //     'user_id' => Auth::user()->id,
+        //     'publish' => 1,
+        //     'views' => 0,
+        //     'stories' => $request->story,
+        // ]);
         return redirect('/dashboard');
-
     }
 
     /**
@@ -62,18 +74,18 @@ class storyController extends Controller
      */
     public function showAll()
     {
-        $stories = Story::with(['user.name'])->where('publish',1)->paginate(10);
-        return view('welcome',[
+        $stories = Story::with(['user.name'])->where('publish', 1)->paginate(10);
+        return view('welcome', [
             'story' => $stories
         ]);
     }
 
     public function show($slug)
     {
-        $find = Story::where('slug',$slug)->first();
-        $comment = Comment::where('story_id',$find->id)->get();
+        $find = Story::where('slug', $slug)->first();
+        $comment = Comment::where('story_id', $find->id)->get();
         // ddd($find);
-        return view('indexpage.story',[
+        return view('indexpage.story', [
             'story' => $find,
             'comment' => $comment
         ]);
@@ -93,8 +105,8 @@ class storyController extends Controller
      */
     public function edit($slug)
     {
-        $find = Story::where('slug',$slug)->first();
-        return view('story.edit',[
+        $find = Story::where('slug', $slug)->first();
+        return view('story.edit', [
             'story' => $find
         ]);
     }
@@ -115,9 +127,8 @@ class storyController extends Controller
             'stories' => $request->story,
             'slug' => $slug
         ]);
-    
+
         return redirect('/dashboard');
-    
     }
 
     /**

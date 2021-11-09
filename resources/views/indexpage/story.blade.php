@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <p>ingin bercerita ??</p>
                     <p>cerita ga nambah beban ke orang lain kok</p>
-                    <p>gasinnn aja <a href="">kesini</a></p>
+                    <p>gasinnn aja <a href="/addstory">kesini</a></p>
                 </div>
             </div>
         </div>

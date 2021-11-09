@@ -17,20 +17,20 @@ class Role extends Component
     //addpermission // editpermission
     public $namepermission, $idpermission;
     public $form = '';
-
+    
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
         'success' => '$refresh'
     ];
     public function render()
     {
-        $role = ModelsRole::paginate(5);
-        $permission = Permission::paginate(15);
+        
+        $role = ModelsRole::all();
+        $permission = Permission::all();
         $permissions = Permission::all();
         return view('role.indexrole', [
             'role' => $role,
             'permissions' => $permission,
-            'permissionss' => $permissions
         ]);
     }
     public function addrole()
