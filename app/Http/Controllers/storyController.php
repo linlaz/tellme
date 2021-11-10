@@ -31,6 +31,11 @@ class storyController extends Controller
         return view('story.create');
     }
 
+    public function createguest(Request $request)
+    {
+        // dd($request->ip());
+        return view('indexpage.addstory');
+    }
     /**
      * Store a newly created resource in storage.
      *

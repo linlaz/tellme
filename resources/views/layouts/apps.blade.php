@@ -22,6 +22,8 @@
     <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 
+    @livewireStyles
+    <link rel="stylesheet" type="text/css" href="/dist/trix.css">
 
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
@@ -42,14 +44,14 @@
                 </div>
                 <div class="col-4 d-flex justify-content-end align-items-center">
                     @if (Route::has('login'))
-                            @auth
-                                <a class="btn btn-sm btn-outline-secondary" href="{{ url('/dashboard') }}">Dashboard</a>
-                            @else
-                                <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('login') }}">login</a>
-                                @if (Route::has('register'))
+                        @auth
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ url('/dashboard') }}">Dashboard</a>
+                        @else
+                            <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('login') }}">login</a>
+                            @if (Route::has('register'))
                                 <a class="btn btn-sm btn-outline-secondary" href="{{ route('register') }}">register</a>
-                                @endif
-                            @endauth
+                            @endif
+                        @endauth
                     @endif
                 </div>
             </div>
@@ -91,5 +93,7 @@
 
 
 </body>
-
+@livewireScripts
+<script type="text/javascript" src="/dist/trix.js"></script>
+    
 </html>

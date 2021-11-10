@@ -22,7 +22,8 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 */
 
 Route::get('/',[storyController::class, 'showAll'])->name('showAllStory');
-Route::get('/story/{slug}', [storyController::class, 'show'])->name('showstory');    
+Route::get('/story/{slug}', [storyController::class, 'show'])->name('showstory');
+Route::get('/addstory', [storyController::class, 'createguest'])->name('addstoryguest'); 
 Route::get('/register',[userController::class,'create'])->name('registers');
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware(['guest:' . config('fortify.guard')])->name('registers');
