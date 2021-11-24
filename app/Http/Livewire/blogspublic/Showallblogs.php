@@ -13,7 +13,7 @@ class Showallblogs extends Component
     protected $paginationTheme = 'bootstrap';
     public function render()
     {
-        $blog = Blog::where('publish', 1)->inRandomOrder()->paginate(5);
+        $blog = Blog::with('category','saves')->where('publish', 1)->inRandomOrder()->paginate(5);
         return view('indexpage.showallblogs', [
             'blog' => $blog
         ]);

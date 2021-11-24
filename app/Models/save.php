@@ -9,7 +9,6 @@ class Save extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-
     public function user()
     {
         return $this->belongsTo(user::class, 'id');

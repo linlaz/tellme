@@ -38,11 +38,11 @@
                         <button type="button" wire:click="addsave('{{ $item->id }}','story')"
                             class="btn btn-outline-primary bi bi-save" title="save this story"></button>
                     @endif
-        <a href="story/{{ $item->slug }}" type="button" class="btn btn-outline-danger bx bxs-comment-detail"
-            title="comment this story"></a>
-        <i type="button" class="btn btn-outline-secondary bi bi-share" title="comment this story"></i>
-    </div>
-    </div>
-    </article>
+                        <a href="story/{{ $item->slug }}" type="button" class="btn btn-outline-danger bx bxs-comment-detail"
+                            title="comment this story"></a>
+                        <i type="button" class="btn btn-outline-secondary bi bi-share" title="comment this story"></i>
+                    </div>
+                </div>
+            </article>
     @endforeach
     </div>

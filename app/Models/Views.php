@@ -9,7 +9,7 @@ class Views extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    
+
     public function story()
     {
         return $this->belongsTo(story::class, 'destination_id');

@@ -13,8 +13,7 @@ class Blog extends Model
     use HasFactory;
     use LogsActivity;
 
-    public $guarded = ['id'];
-
+    protected $guarded = ['id'];
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

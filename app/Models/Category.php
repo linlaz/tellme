@@ -13,8 +13,7 @@ class Category extends Model
     use LogsActivity;
     use HasFactory;
 
-    public $guarded = ['id'];
-
+    protected $guarded = ['id'];
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

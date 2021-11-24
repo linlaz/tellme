@@ -11,7 +11,7 @@ class Welcomestory extends Component
 {
     public function render()
     {
-        $stories = Story::where('publish', '1')->inRandomOrder()->paginate(10);
+        $stories = Story::with('saves')->where('publish', '1')->inRandomOrder()->paginate(10);
         return view('indexpage.welcomestory', [
             'story' => $stories,
         ]);

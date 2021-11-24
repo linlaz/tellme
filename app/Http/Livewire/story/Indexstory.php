@@ -20,9 +20,9 @@ class Indexstory extends Component
     {
 
         if (Auth::user()->hasRole('admin')) {
-          $story = Story::paginate(3);
+          $story = Story::with('views')->paginate(3);
         }else{
-            $story = Story::where('user_id', Auth::user()->id)->paginate(3);
+            $story = Story::with('views')->where('user_id', Auth::user()->id)->paginate(3);
         }
         return view('story.indexstory', [
             'stories' => $story

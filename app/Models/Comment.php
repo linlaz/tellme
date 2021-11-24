@@ -10,7 +10,6 @@ class Comment extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-
     public function story()
     {
         $this->belongsTo(Story::class,'id');

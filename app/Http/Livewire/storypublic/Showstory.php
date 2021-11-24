@@ -24,7 +24,7 @@ class Showstory extends Component
 
     public function render()
     {
-        $findstory = Story::where('slug', $this->slug)->first();
+        $findstory = Story::with('comment')->where('slug', $this->slug)->first();
         $finds = views::where('visitor', $this->findip)->where('destination', 'story')->where('destination_id', $findstory->id)->first();
         if (is_null($finds)) {
             $finds = Views::create([
