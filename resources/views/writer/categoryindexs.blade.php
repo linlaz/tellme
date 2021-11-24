@@ -23,8 +23,8 @@
                                         <td>
                                             @can('delete-category')
                                                 <button type="button" class="btn btn-danger"
-                                                onclick="confirm('Are you sure you want to delete this category ?') || event.stopImmediatePropagation()"
-                                                wire:click="delete('{{ $item->id }}')">Delete</button>
+                                                    onclick="confirm('Are you sure you want to delete this category ? delete category same you delete blog in category this') || event.stopImmediatePropagation()"
+                                                    wire:click="delete('{{ $item->id }}')">Delete</button>
                                             @endcan
                                         </td>
                                     </tr>

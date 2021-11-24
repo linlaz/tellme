@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Category;
+
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -18,14 +18,26 @@ class Blog extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['title','text', 'Category.name', 'publish'])
-            ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
+            ->logOnly(['title', 'text', 'Category.name', 'publish'])
             ->useLogName('blog')
             ->logOnlyDirty();
     }
 
-    public function Category()
+    public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function views()
+    {
+        return $this->hasMany(Views::class, 'destination_id');
+    }
+    public function saves()
+    {
+        return $this->hasMany(save::class, 'destination_id');
+    }
+
 }

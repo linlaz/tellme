@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
+use App\Models\Blog;
 use App\Models\Story;
+use App\Models\IPuser;
+use App\Models\Comment;
+use App\Models\Sessions;
+use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class storyController extends Controller
 {
@@ -16,6 +22,7 @@ class storyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         return view('story.index');
@@ -33,7 +40,7 @@ class storyController extends Controller
 
     public function createguest(Request $request)
     {
-        // dd($request->ip());
+
         return view('indexpage.addstory');
     }
     /**
@@ -44,31 +51,35 @@ class storyController extends Controller
      */
     public function store(Request $request)
     {
+
         $faker = Faker::create();
         $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
-        $find = Story::Where('slug',$slug)->first();
-        if($find){
-            $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
+        $find = Story::Where('slug', $slug)->first();
+        if ($find != null) {
+            while ($find->slug = $slug) {
+                $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
+            }
+        }
+        $ipuser = IPuser::where('ip_user', $request->ip())->first();
+
+        if (!is_null(Auth::user())) {
+            $iduser = Auth::user()->id;
+        } else {
+            $iduser = null;
         }
         Story::create([
             'slug' => $slug,
             'choice' => $request->choice,
-            'user_id' => Auth::user()->id,
-            'publish' => 1,
-            'views' => 0,
+            'user_id' => $iduser,
+            'publish' => '1',
             'stories' => $request->story,
+            'ip_user' => $ipuser->id
         ]);
-        // $limit = Str::limit(strip_tags($request->story), 20);
-        // $slug = Str::of($limit)->slug('-') . rand();
-        // Story::create([
-        //     'slug' => $slug,
-        //     'choice' => $request->choice,
-        //     'user_id' => Auth::user()->id,
-        //     'publish' => 1,
-        //     'views' => 0,
-        //     'stories' => $request->story,
-        // ]);
-        return redirect('/dashboard');
+        if (is_null($iduser)) {
+            return redirect("/story/" . $slug);
+        } else {
+            return redirect('/dashboard');
+        }
     }
 
     /**
@@ -79,29 +90,11 @@ class storyController extends Controller
      */
     public function showAll()
     {
-        $stories = Story::with(['user.name'])->where('publish', 1)->paginate(10);
+        $blog = Blog::with('category')->where('publish', '1')->inRandomOrder()->limit(3)->get();
         return view('welcome', [
-            'story' => $stories
+            'blog' => $blog
         ]);
     }
-
-    public function show($slug)
-    {
-        $find = Story::where('slug', $slug)->first();
-        $comment = Comment::where('story_id', $find->id)->get();
-        // ddd($find);
-        return view('indexpage.story', [
-            'story' => $find,
-            'comment' => $comment
-        ]);
-    }
-
-
-    public function showhistory($slug)
-    {
-        dd($slug);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -125,12 +118,10 @@ class storyController extends Controller
      */
     public function update(Request $request)
     {
+
         $find = Story::findorfail($request->id);
-        $limit = Str::limit(strip_tags($request->story), 20);
-        $slug = Str::of($limit)->slug('-') . rand();
         $find->update([
-            'stories' => $request->story,
-            'slug' => $slug
+            'stories' => $request->story
         ]);
 
         return redirect('/dashboard');
@@ -142,6 +133,13 @@ class storyController extends Controller
      * @param  \App\Models\story  $story
      * @return \Illuminate\Http\Response
      */
+
+    public function show($slug)
+    {
+        return view('indexpage.story',[
+            'story' => $slug
+        ]);
+    }
     public function destroy(story $story)
     {
         //

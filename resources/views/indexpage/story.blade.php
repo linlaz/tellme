@@ -1,7 +1,7 @@
 <x-apps-layout>
     <div class="row g-5">
-        <div class="col-md-2">
-            <div class="card">
+        <div class="col-md d-md-none d-lg-block d-lg-none d-xl-none">
+            <div class="card ">
                 <div class="card-body">
                     <p>ingin bercerita ??</p>
                     <p>cerita ga nambah beban ke orang lain kok</p>
@@ -9,21 +9,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-                <article class="card mb-3">
-                    <div class="card-body">
-                        <p class="blog-post-meta">{{ $story->created_at }}</p>
-                        <div class="mb-3">
-                            @isset($story->stories)
-                                {!! $story->stories !!}
-                            @endisset
-                        </div>
-                        <div>
-                            <i type="button" class="btn btn-primary bx bxs-save" title="save this story"></i>
-                            <i type="button" class="btn btn-primary bx bxs-share-alt" title="comment this story"></i>
-                        </div>
-                    </div>
-                </article>
+        <div class="col-md-8 border-end">
+            @livewire('storypublic.showstory', ['slug' => $story])
+        </div>
+        <div class="col-md">
+            <div class="card d-sm-none d-none d-md-block">
+                <div class="card-body">
+                    <p>ingin bercerita ??</p>
+                    <p>cerita ga nambah beban ke orang lain kok</p>
+                    <p>gasinnn aja <a href="/addstory">kesini</a></p>
+                </div>
+            </div>
         </div>
     </div>
 </x-apps-layout>

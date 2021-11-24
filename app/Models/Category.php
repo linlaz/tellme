@@ -18,13 +18,16 @@ class Category extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name','slug'])
-            ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
+            ->logOnly(['name', 'slug'])
             ->useLogName('category')
             ->logOnlyDirty();
     }
-    public function Blog()
+    public function story()
     {
-        return $this->hasMany(Blog::class,'user_id');
+        return $this->hasMany(Story::class, 'category_id');
+    }
+    public function blog()
+    {
+        return $this->hasMany(Blog::class, 'category_id');
     }
 }

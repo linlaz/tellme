@@ -1,7 +1,7 @@
 <x-AppsLayout>
     <div class="row g-5">
-        <div class="col-md-2">
-            <div class="card">
+        <div class="col-md d-md-none d-lg-block d-lg-none d-xl-none">
+            <div class="card ">
                 <div class="card-body">
                     <p>ingin bercerita ??</p>
                     <p>cerita ga nambah beban ke orang lain kok</p>
@@ -9,28 +9,64 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            @foreach ($story as $item)
-                <article class="card mb-3">
+        @livewire('storypublic.welcomestory')
+        <div class="col-md">
+            <div class="position-sticky d-sm-none d-none d-sm-block d-md-block" style="top: 2rem;">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <p>ingin bercerita ??</p>
+                    <p>cerita ga nambah beban ke orang lain kok</p>
+                    <p>gasinnn aja <a href="/addstory">kesini</a></p>
+                </div>
+                <div class="p-4">
+                    @foreach ($blog as $item)
+                        <div class="card mb-1" style="border: none">
+                            <div class="card-body">
+                                <h3>{{ $item->title }}</h3>
+                                <p class="card-text">
+                                    <small class="text-muted">{{ $item->category->name }}</small>
+                                </p>
+                                {!! Str::limit(html_entity_decode(strip_tags($item->text)), 50, '...') !!}<a
+                                    href="blogs/{{ $item->slug }}">[read
+                                    complete]</a>
+
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="p-4">
+                    <h4 class="fst-italic">Elsewhere</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="col-md">
+            <div class="card d-sm-none d-none d-sm-block d-md-block">
+                <div class="card-body">
+                    <p>ingin bercerita ??</p>
+                    <p>cerita ga nambah beban ke orang lain kok</p>
+                    <p>gasinnn aja <a href="/addstory">kesini</a></p>
+                </div>
+            </div>
+            @foreach ($blog as $item)
+                <div class="card mb-1" style="border: none">
                     <div class="card-body">
-                        <p class="blog-post-meta">{{ $item->created_at }}</p>
-                        <div class="mb-3">
-                        @isset($item->stories)
-                            {!! Str::limit($item->stories, 10, '...') !!}<a href="story/{{ $item->slug }}">[read complete]</a>
-                        @endisset
-                        </div>
-                        <div>
-                        <i type="button" class="btn btn-primary bx bxs-save" title="save this story"></i>
-                        <i type="button" class="btn btn-primary bx bxs-comment-detail" title="comment this story"></i>
-                        <i type="button" class="btn btn-primary bx bxs-share-alt" title="comment this story"></i>
-                        </div>
+                        <h3>{{ $item->title }}</h3>
+                        <p class="card-text">
+                            <small class="text-muted">{{ $item->category->name }}</small>
+                        </p>
+                        {{ Str::limit(html_entity_decode(strip_tags($item->text)), 50, '...') }}<a
+                            href="blogs/{{ $item->slug }}">[read
+                            complete]</a>
+
                     </div>
-                </article>
+                </div>
             @endforeach
 
-
-
-
-        </div>
+        </div> --}}
     </div>
 </x-AppsLayout>

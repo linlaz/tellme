@@ -17,14 +17,14 @@ class Role extends Component
     //addpermission // editpermission
     public $namepermission, $idpermission;
     public $form = '';
-    
+
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
         'success' => '$refresh'
     ];
     public function render()
     {
-        
+
         $role = ModelsRole::all();
         $permission = Permission::all();
         $permissions = Permission::all();
@@ -59,7 +59,7 @@ class Role extends Component
         $this->name = '';
         $this->permissionselect = '';
         $this->getidrole = '';
-        $this->getnamerole = '';    
+        $this->getnamerole = '';
         $this->getpermissionupdate = '';
         $this->namepermission = '';
         $this->idpermission = '';
@@ -72,24 +72,24 @@ class Role extends Component
     }
     public function showedit(ModelsRole $id)
     {
-        
+
         $this->form = 'editrole';
         $this->getidrole = $id->id;
         $this->getnamerole = $id->name;
         $this->getpermissionrole = $id->getAllPermissions()->pluck('name');
-        
     }
     public function updaterole(ModelsRole $id)
     {
-        
+
         $this->validate([
             'getnamerole' => 'required|alpha_dash|unique:roles,name,' . $id->id
         ]);
         $id->update([
             'name' =>  $this->getnamerole,
         ]);
-        $id->givePermissionTo($this->getpermissionrole);
-        
+
+        $id->syncPermissions($this->getpermissionrole);
+
         $this->resetall();
         $this->emit('success');
     }

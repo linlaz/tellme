@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\writer;
 
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;

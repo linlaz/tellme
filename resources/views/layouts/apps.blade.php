@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
-    <title>Blog Template · Bootstrap v5.0</title>
+    <title>Tellme | for your mental health</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/blog/">
 
@@ -21,10 +21,19 @@
     <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-
     @livewireStyles
-    <link rel="stylesheet" type="text/css" href="/dist/trix.css">
 
+    <link rel="stylesheet" type="text/css" href="/dist/trix.css">
+    <style>
+        trix-toolbar .trix-button-group--file-tools {
+            display: none;
+        }
+
+        trix-toolbar .trix-button-group--block-tools {
+            display: none;
+        }
+
+    </style>
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -32,57 +41,56 @@
 </head>
 
 <body>
-
     <div class="container">
-        <header class="blog-header py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-4 pt-1">
-                    <a class="link-secondary" href="#">Subscribe</a>
-                </div>
-                <div class="col-4 text-center">
-                    <a class="blog-header-logo text-dark" href="#">Large</a>
-                </div>
-                <div class="col-4 d-flex justify-content-end align-items-center">
-                    @if (Route::has('login'))
-                        @auth
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ url('/dashboard') }}">Dashboard</a>
-                        @else
-                            <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('login') }}">login</a>
-                            @if (Route::has('register'))
-                                <a class="btn btn-sm btn-outline-secondary" href="{{ route('register') }}">register</a>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light blog-header py-3">
+            <div class="container-fluid">
+                <a class=" blog-header-logo text-dark" href="/">Tellme</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item mx-3">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" href="{{ route('blogs') }}">blog</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <ul class="navbar-nav">
+                            @if (Route::has('login'))
+                                @auth
+                                    <li class="nav-item mx-3">
+                                        <a class="btn btn-sm btn-outline-secondary"
+                                            href="{{ url('/dashboard') }}">Dashboard</a>
+                                    </li>
+                                @else
+                                    <li class="nav-item mx-3">
+                                        <a class="btn btn-sm btn-outline-secondary mx-2"
+                                            href="{{ route('login') }}">login</a>
+                                    </li>
+                                    @if (Route::has('register'))
+                                        <li class="nav-item mx-3">
+                                            <a class="btn btn-sm btn-outline-secondary"
+                                                href="{{ route('register') }}">register</a>
+                                        </li>
+                                    @endif
+                                @endauth
                             @endif
-                        @endauth
-                    @endif
+
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </header>
-
-        {{-- <div class="nav-scroller py-1 mb-2">
-            <nav class="nav d-flex justify-content-between">
-                <a class="p-2 link-secondary" href="#">World</a>
-                <a class="p-2 link-secondary" href="#">U.S.</a>
-                <a class="p-2 link-secondary" href="#">Technology</a>
-                <a class="p-2 link-secondary" href="#">Design</a>
-                <a class="p-2 link-secondary" href="#">Culture</a>
-                <a class="p-2 link-secondary" href="#">Business</a>
-                <a class="p-2 link-secondary" href="#">Politics</a>
-                <a class="p-2 link-secondary" href="#">Opinion</a>
-                <a class="p-2 link-secondary" href="#">Science</a>
-                <a class="p-2 link-secondary" href="#">Health</a>
-                <a class="p-2 link-secondary" href="#">Style</a>
-                <a class="p-2 link-secondary" href="#">Travel</a>
-            </nav>
-        </div> --}}
+        </nav>
     </div>
 
     <main class="container mt-2" style="min-height: 600px;">
-
         {{ $slot }}
-
-
     </main>
 
-    <footer class="blog-footer">
+    <footer class="container blog-footer">
         <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a
                 href="https://twitter.com/mdo">@mdo</a>.</p>
         <p>
@@ -94,6 +102,12 @@
 
 </body>
 @livewireScripts
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 <script type="text/javascript" src="/dist/trix.js"></script>
-    
+<script>
+    document.addEventlistener('trix-file-accept', function(e) {
+        e.preventDefault();
+    })
+</script>
+
 </html>

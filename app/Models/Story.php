@@ -17,12 +17,27 @@ class Story extends Model
     {
         return LogOptions::defaults()
             ->logOnly(['slug','stories'])
-            ->setDescriptionForEvent(fn(string $eventName) => "{$eventName}")
             ->useLogName('story')
             ->logOnlyDirty();
     }
     public function user()
     {
-        return $this->hasMany(User::class,'id');
+        return $this->belongsTo(User::class,'id');
+    }
+    public function ipuser()
+    {
+        return $this->belongsTo(IPuser::class,'id');
+    }
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'story_id');
+    }
+    public function views()
+    {
+        return $this->hasMany(Views::class, 'destination_id');
+    }
+    public function saves()
+    {
+        return $this->hasMany(save::class, 'destination_id');
     }
 }

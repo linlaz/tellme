@@ -3,7 +3,7 @@
         <div class="card my-2">
             <div class="card-body" style="transform: rotate(0);">
                 <h1 class="card-text my-3">{{ $item->title }}</h1>
-                {!! Str::limit($item->text, 200, '...') !!}
+                {!! Str::limit(strip_tags($item->text), 200, '...') !!}
                 <div>
                     <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-bar-chart" viewBox="0 0 16 16">
@@ -11,8 +11,11 @@
                                 d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z">
                             </path>
                         </svg>
-                        {{ $item->views }} || @if ($item->publish){{ 'publish' }}@else{{ 'draft' }}@endif.last update {{ $item->updated_at }} |
-                        {{ $item->category->name }}</p>
+                        {{ $item->views->where('destination', 'blog')->count() }} || @if ($item->publish){{ 'publish' }}@else{{ 'draft' }}@endif.last
+                        update {{ $item->updated_at }}
+                        |
+                        {{ $item->category->name }}
+                    </p>
                     <a href="" class="stretched-link"></a>
                 </div>
             </div>
@@ -47,4 +50,5 @@
             </div>
         </div>
     @endforeach
+    {{ $blog->links() }}
 </div>

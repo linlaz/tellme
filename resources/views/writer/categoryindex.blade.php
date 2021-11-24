@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:categoryindex></livewire:categoryindex>
+    <livewire:writer.categoryindex></livewire:writer.categoryindex>
 </x-app-layout>

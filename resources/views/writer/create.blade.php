@@ -18,26 +18,20 @@
                     <div class="row mb-3">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Title Blog</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
+                            <input type="text" class="form-control " name="title"
                                 id="inputText" value="{{ old('title') }}">
-                            @error('title')
-                                <div class="alert alert-danger my-1">{{ $message }}</div>
-                            @enderror
+                          
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Category</label>
-                        <div class="col-sm-10  @error('title') is-invalid @enderror">
+                        <div class="col-sm-10 ">
                             <select class="js-example-basic-single form-select" aria-label="Default select example"
                                 id="category" name="name">
                                 @foreach ($category as $item)
                                     <option value="{{ $item->slug }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                        @error('title')
-                            <div class="alert alert-danger my-1">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="row mb-3">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">subjek</label>

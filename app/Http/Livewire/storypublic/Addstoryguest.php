@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\storypublic;
 
 use Livewire\Component;
 
 class Addstoryguest extends Component
 {
-    public $pilihan = 'text';
+    public $choice = 'text';
 
     public function render()
     {

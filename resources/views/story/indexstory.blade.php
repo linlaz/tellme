@@ -4,6 +4,19 @@
             <div class="card-body">
                 <h5 class="card-title">Created at {{ $item->created_at }}</h5>
                 {!! Str::limit(strip_tags($item->stories), 200, '...') !!}
+                @can('show-story')
+                    <div class="my-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-bar-chart" viewBox="0 0 16 16">
+                            <path
+                                d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z">
+                            </path>
+                        </svg>
+                        {{ $item->views->where('destination', 'story')->count() }} || @if ($item->publish == '1'){{ 'publish' }}@else{{ 'draft' }}@endif.last update
+                        {{ $item->updated_at }}
+                        </>
+                    </div>
+                @endcan
             </div>
             <div class="card-footer text-muted">
                 @if ($item->publish == 0)
@@ -23,8 +36,8 @@
                             title="edit your blog"></a>
                     @endcan
                     @can('history-blog')
-                        <a href="/story/history/{{ $item->slug }}" type="button" class="m-2 btn btn-info ri-file-history-fill"
-                            title="history story"></a>
+                        <a href="/story/history/{{ $item->slug }}" type="button"
+                            class="m-2 btn btn-info ri-file-history-fill" title="history story"></a>
                     @endcan
                 @endif
                 @can('delete-story')

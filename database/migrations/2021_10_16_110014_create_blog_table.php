@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,9 +19,7 @@ class CreateBlogTable extends Migration
             $table->text('title');
             $table->text('slug')->unique();
             $table->longText('text');
-            $table->foreignId('category_id');
-            $table->foreignId('user_id');
-            $table->integer('views');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->integer('publish');
             $table->timestamps();
         });

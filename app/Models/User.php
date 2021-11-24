@@ -29,8 +29,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
+        'ip_user',
     ];
 
     /**
@@ -66,13 +66,23 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'email'])
+            ->logOnly(['name'])
             ->useLogName('user');
-        
     }
-    
     public function story()
     {
-        return $this->belongsTo(Story::class,'user_id');
+        return $this->hasMany(Story::class,'user_id');
+    }
+    public function saves()
+    {
+        return $this->hasMany(save::class, 'user_id');
+    }
+    public function blog()
+    {
+        return $this->hasMany(Blog::class, 'user_id');
+    }
+    public function ipuser()
+    {
+        return $this->belongsTo(IPuser::class, 'id');
     }
 }

@@ -5,5 +5,6 @@
             Add blog
         </a>
     @endcan
-    <livewire:indexblog />
+    <livewire:writer.indexblog />
+    
 </x-app-layout>

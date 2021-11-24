@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category as ModelsCategory;
+use App\Models\IPuser;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -98,16 +99,22 @@ class DatabaseSeeder extends Seeder
         $deletestory = Permission::create([
             'name' => 'delete-story'
         ]);
+        $showstory = Permission::create([
+            'name' => 'show-story'
+        ]);
         $admin->givePermissionTo(['add-role', 'edit-role', 'delete-role', 'add-permission', 'edit-permission', 'delete-permission']);
 
         ModelsCategory::create([
             'name' => 'mental health',
             'slug' => 'mental-health'
         ]);
-
+        $ip = IPuser::create([
+            'ip_user' => "127.0.0.1",
+            'active' => "1"
+        ]);
         $user = User::create([
             'name' => 'lintang lazuardi',
-            'email' => 'lazuardilintang@apps.ipb.ac.id',
+            'ip_user' => 1,
             'password' => bcrypt('linlaz11')
         ]);
         $user->assignRole('admin');
