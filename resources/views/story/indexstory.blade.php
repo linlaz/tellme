@@ -13,7 +13,8 @@
                             </path>
                         </svg>
                         {{ $item->views->where('destination', 'story')->count() }} || @if ($item->publish == '1'){{ 'publish' }}@else{{ 'draft' }}@endif.last update
-                        {{ $item->updated_at }}
+                        {{ $item->updated_at }} | <i
+                            class="ri-save-3-fill"></i>{{ $item->saves->where('user_id', Auth::id())->where('destination', 'story')->count() }}
                         </>
                     </div>
                 @endcan
@@ -22,31 +23,30 @@
                 @if ($item->publish == 0)
                     @can('publish-story')
                         <i wire:click="actionp('1','{{ $item->id }}')" type="button"
-                            class="btn btn-primary m-2 ri-send-plane-fill" title="publish your blog"></i>
+                            class="btn btn-primary m-2 ri-send-plane-fill" title="publish your story"></i>
                     @endcan
                 @else
                     @can('unpublish-story')
                         <i wire:click="actionp('0','{{ $item->id }}')" type="button"
-                            class="btn btn-primary m-2 ri-draft-fill" title="unpublish your blog"></i>
+                            class="btn btn-primary m-2 ri-draft-fill" title="unpublish your story"></i>
                     @endcan
                 @endif
                 @if ($item->choice != 'voice')
                     @can('edit-story')
                         <a href="/dashboard/edit/{{ $item->slug }}" type="button" class="btn btn-success ri-edit-box-line"
-                            title="edit your blog"></a>
+                            title="edit your story"></a>
                     @endcan
                     @can('history-blog')
-                        <a href="/story/history/{{ $item->slug }}" type="button"
+                        <a href="/storyhistory/{{ $item->slug }}" type="button"
                             class="m-2 btn btn-info ri-file-history-fill" title="history story"></a>
                     @endcan
                 @endif
                 @can('delete-story')
                     <i onclick="confirm('Are you sure you want to delete this story ?') || event.stopImmediatePropagation()"
                         wire:click="actionp('d','{{ $item->id }}')" type="button"
-                        class="btn btn-danger ri-delete-bin-5-fill" title="delete your blog"></i>
+                        class="btn btn-danger ri-delete-bin-5-fill" title="delete your story"></i>
                 @endcan
-
-                <i type="button" class=" m-2 btn btn-secondary bx bx-show-alt" title="show your blog"></i>
+                <i type="button" class=" m-2 btn btn-secondary bx bx-show-alt" title="show your story"></i>
             </div>
         </div>
     @endforeach

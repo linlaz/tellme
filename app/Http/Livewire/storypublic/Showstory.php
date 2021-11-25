@@ -15,7 +15,7 @@ class Showstory extends Component
 {
     public $findip,$slug, $comment;
     public $formcomment = 'off';
-
+    public $value = '';
     public function mount(Request $request,$slug)
     {
         $this->findip = $request->ip();
@@ -74,7 +74,7 @@ class Showstory extends Component
     }
     public function savecomment()
     {
-        @dd($this->comment);
+        @dd($this->value);
         Comment::create([
             'user_id' => Auth::user()->id,
             'subject' => $this->comment,

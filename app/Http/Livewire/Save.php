@@ -10,7 +10,7 @@ class Save extends Component
 {
     public function render()
     {
-        $save = ModelsSave::where('user_id', Auth::user()->id)->paginate(5);
+        $save = ModelsSave::with('blog','story')->where('user_id', Auth::user()->id)->paginate(5);
         return view('save.save', [
             'save' => $save
         ]);

@@ -106,7 +106,7 @@ class blogController extends Controller
     public function showhistory($slug)
     {
         $find = Blog::where('slug', $slug)->first();
-        $history = Activity::where('log_name', 'blog')->where('subject_id', $find->id)->orderBy('created_at', 'desc')->get();
+        $history = Activity::with('user')->where('log_name', 'blog')->where('subject_id', $find->id)->orderBy('created_at', 'desc')->get();
         return view('writer.history', [
             'nowblog' => $find,
             'history' => $history

@@ -39,13 +39,13 @@
     </style>
     <!-- Template Main CSS File -->
     <link href="/assets/css/style.css" rel="stylesheet">
-    <link href="/css/record.css" rel="stylesheet">
+    {{-- <link href="/css/record.css" rel="stylesheet"> --}}
     @livewireStyles
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-    <script src="https://markjivko.com/dist/recorder.js"></script>
+    {{-- <script src="https://markjivko.com/dist/recorder.js"></script> --}}
 </head>
 
 <body>
@@ -400,7 +400,7 @@
     <script src="/assets/vendor/echarts/echarts.min.js"></script>
     <!-- Template Main JS File -->
     <script src="/assets/js/main.js"></script>
-    <script src="/js/record.js"></script>
+    {{-- <script src="/js/record.js"></script> --}}
     <script type="text/javascript" src="/dist/trix.js"></script>
     <script>
         $(document).ready(function() {
@@ -409,9 +409,7 @@
             });
         });
 
-        document.addEventlistener('trix-file-accept', function(e) {
-            e.preventDefault();
-        })
+       
     </script>
 
 </body>

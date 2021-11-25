@@ -34,8 +34,8 @@
     </article>
     @if ($formcomment == 'active')
         <form action="POST" wire:submit.prevent="savecomment">
-            <input id="story" type="hidden" name="comment" wire:model='comment' required>
-            <trix-editor input="story"></trix-editor>
+             <input id="x" type="hidden" name="content" value="{{ $value }}">
+            <trix-editor input="x"></trix-editor>
             <button type="submit">save comment</button>
         </form>
     @endif
@@ -50,5 +50,5 @@
             </div>
         </div>
     @endforeach
-
 </div>
+

@@ -15,6 +15,9 @@
                         update {{ $item->updated_at }}
                         |
                         {{ $item->category->name }}
+                        |
+                        <i
+                            class="ri-save-3-fill"></i>{{ $item->saves->where('user_id', Auth::id())->where('destination', 'blog')->count() }}
                     </p>
                     <a href="" class="stretched-link"></a>
                 </div>
@@ -36,15 +39,16 @@
                     <a href="/blog/edit/{{ $item->slug }}" type="button" class="btn btn-success ri-edit-box-line"
                         title="edit your blog"></a>
                 @endcan
+                @can('history-blog')
+                    <a href="/blog/history/{{ $item->slug }}" type="button" class="btn btn-info ri-file-history-fill m-2"
+                        title="history your blog"></a>
+                @endcan
                 @can('delete-blog')
                     <i onclick="confirm('Are you sure you want to delete this blog ?') || event.stopImmediatePropagation()"
                         wire:click="actionp('delete','1','{{ $item->id }}')" type="button"
-                        class="btn btn-danger m-2 ri-delete-bin-5-fill" title="delete your blog"></i>
+                        class="btn btn-danger ri-delete-bin-5-fill" title="delete your blog"></i>
                 @endcan
-                @can('history-blog')
-                    <a href="/blog/history/{{ $item->slug }}" type="button" class="btn btn-info ri-file-history-fill"
-                        title="history your blog"></a>
-                @endcan
+                
                 <i wire:click="show('{{ $item->id }}')" type="button" class="btn btn-secondary bx bx-show-alt m-2"
                     title="show your blog"></i>
             </div>

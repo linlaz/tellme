@@ -108,6 +108,7 @@
     document.addEventlistener('trix-file-accept', function(e) {
         e.preventDefault();
     })
+    
 </script>
 
 </html>

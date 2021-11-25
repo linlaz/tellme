@@ -82,6 +82,6 @@ class User extends Authenticatable
     }
     public function ipuser()
     {
-        return $this->belongsTo(IPuser::class, 'id');
+        return $this->belongsTo(IPuser::class, 'ip_user');
     }
 }

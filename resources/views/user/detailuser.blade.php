@@ -6,7 +6,7 @@
           <tr>
             <th scope="col">log name</th>
             <th scope="col">action</th>
-            <th scope="col">action</th>
+            <th scope="col">attributes</th>
           </tr>
         </thead>
         <tbody>

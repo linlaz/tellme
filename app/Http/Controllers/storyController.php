@@ -140,8 +140,8 @@ class storyController extends Controller
             'story' => $slug
         ]);
     }
-    public function destroy(story $story)
+    public function showhistory($slug)
     {
-        //
+        @dd($slug);
     }
 }

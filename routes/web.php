@@ -43,7 +43,7 @@ Route::group(['prefix' => 'dashboard',  'middleware' => 'auth:sanctum'], functio
     Route::post('/addstory', [storyController::class, 'store'])->name('addstories');
     Route::get('/edit/{slug}', [storyController::class, 'edit'])->name('editstory');
     Route::post('/story', [storyController::class, 'update'])->name('editstories');
-    Route::get('/story/history/{slug}', [storyController::class, 'showhistory'])->name('historystory');
+    Route::get('/storyhistory/{slug}', [storyController::class, 'showhistory'])->name('historystory');
     //endstory
 
     Route::get('/save', [saveController::class, 'index'])->name('save');

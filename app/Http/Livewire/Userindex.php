@@ -22,7 +22,7 @@ class Userindex extends Component
     public function render()
     {
         return view('user.userindex', [
-            'user' => User::all()
+            'user' => User::with('roles','ipuser')->get()
         ]);
     }
     public function edit($id)
