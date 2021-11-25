@@ -45,7 +45,8 @@
                         <button type="button" wire:click="addsave('{{ $item->id }}','blog')"
                             class="btn btn-outline-primary bi bi-save" title="save this blog"></button>
                     @endif
-    <i type="button" class="btn btn-outline-secondary bi bi-share" title="comment this blog"></i>
+    <i type="button" class="btn btn-outline-secondary bi bi-share" data-clipboard-text="http://tellme.test/blogs/{{ $item->slug }}"  title="comment this blog"
+         onclick="alert('this link copied for you')"></i>
 </div>
 </article>
 <hr>

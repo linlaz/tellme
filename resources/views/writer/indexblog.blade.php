@@ -19,7 +19,7 @@
                         <i
                             class="ri-save-3-fill"></i>{{ $item->saves->where('user_id', Auth::id())->where('destination', 'blog')->count() }}
                     </p>
-                    <a href="" class="stretched-link"></a>
+                    <a href="/blogs/{{ $item->slug }}" class="stretched-link"></a>
                 </div>
             </div>
 

@@ -22,7 +22,7 @@ class Userindex extends Component
     public function render()
     {
         return view('user.userindex', [
-            'user' => User::with('roles','ipuser')->get()
+            'user' => User::with('roles', 'ipuser')->get()
         ]);
     }
     public function edit($id)
@@ -48,7 +48,7 @@ class Userindex extends Component
         $this->anyrole = '';
         $this->form = '';
         $this->idedit = '';
-        $this->getusername = ''; 
+        $this->getusername = '';
         $this->getroleuseredit = '';
         $this->permission = '';
         $this->userpermission = '';
@@ -59,10 +59,11 @@ class Userindex extends Component
         $id->delete();
         $this->emit('success');
     }
-    public function blok(User $id)
+    public function blok(User $id, $active)
     {
         $id->update([
-            'status' => 0
+            'active' => $active
         ]);
+        $this->emit('success');
     }
 }

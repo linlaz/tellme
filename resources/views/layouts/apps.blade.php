@@ -21,6 +21,7 @@
     <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
     @livewireStyles
 
     <link rel="stylesheet" type="text/css" href="/dist/trix.css">
@@ -105,10 +106,12 @@
 <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 <script type="text/javascript" src="/dist/trix.js"></script>
 <script>
+    var clipboard = new ClipboardJS('.btn');
+</script>
+<script>
     document.addEventlistener('trix-file-accept', function(e) {
         e.preventDefault();
     })
-    
 </script>
 
 </html>

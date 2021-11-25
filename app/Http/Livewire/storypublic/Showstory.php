@@ -13,36 +13,37 @@ use Illuminate\Support\Facades\Auth;
 
 class Showstory extends Component
 {
-    public $findip,$slug, $comment;
+    public $findip, $slug, $comment, $findstory;
     public $formcomment = 'off';
-    public $value = '';
-    public function mount(Request $request,$slug)
+
+    protected $listeners = ['success' => '$refresh'];
+
+    public function mount(Request $request)
     {
         $this->findip = $request->ip();
-        $this->slug = $slug;
+        $this->findstory = Story::with('comment')->where('slug', $this->slug)->first();
     }
 
     public function render()
     {
-        $findstory = Story::with('comment')->where('slug', $this->slug)->first();
-        $finds = views::where('visitor', $this->findip)->where('destination', 'story')->where('destination_id', $findstory->id)->first();
+        // $findstory = Story::with('comment')->where('slug', $this->slug)->first();
+        $finds = views::where('visitor', $this->findip)->where('destination', 'story')->where('destination_id', $this->findstory->id)->first();
         if (is_null($finds)) {
             $finds = Views::create([
                 'visitor' => $this->findip,
                 'destination' => 'story',
-                'destination_id' => $findstory->id
+                'destination_id' => $this->findstory->id
             ]);
         }
         return view('indexpage.showstory', [
-            'story' => $findstory
+            'story' => $this->findstory
         ]);
     }
 
     public function addsave($id, $item)
     {
         if (Auth::guest()) {
-            session()->flash('mustlogin', $item . ' unsuccessfully save. you must login');
-            return redirect()->to('/#');
+            return session()->flash('mustlogin', $item . ' unsuccessfully save. you must login');
         } else {
             $find = Save::where('user_id', Auth::user()->id)->where('destination', 'story')->where('destination_id', $id)->first();
             if (is_null($find)) {
@@ -72,13 +73,15 @@ class Showstory extends Component
     {
         $this->formcomment = $cek;
     }
+
     public function savecomment()
     {
-        @dd($this->value);
         Comment::create([
             'user_id' => Auth::user()->id,
             'subject' => $this->comment,
-            'story_id' => 1
+            'story_id' => $this->findstory->id
         ]);
+        $this->formcomment = 'off';
+        $this->emit('success');
     }
 }

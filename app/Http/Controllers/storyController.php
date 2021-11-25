@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Story;
 use App\Models\IPuser;
-use App\Models\Comment;
-use App\Models\Sessions;
 use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
 
 class storyController extends Controller
 {
@@ -38,10 +34,10 @@ class storyController extends Controller
         return view('story.create');
     }
 
-    public function createguest(Request $request)
+    public function createguest()
     {
 
-        return view('indexpage.addstory');
+        return view('indexpage.addstorycontroller')->with('warning','coba');
     }
     /**
      * Store a newly created resource in storage.
@@ -65,7 +61,7 @@ class storyController extends Controller
         if (!is_null(Auth::user())) {
             $iduser = Auth::user()->id;
         } else {
-            $iduser = null;
+            $iduser = NULL;
         }
         Story::create([
             'slug' => $slug,
@@ -136,7 +132,7 @@ class storyController extends Controller
 
     public function show($slug)
     {
-        return view('indexpage.story',[
+        return view('indexpage.storycontroller',[
             'story' => $slug
         ]);
     }

@@ -1,10 +1,16 @@
 <div>
-    @if (session()->has('message'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('message') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+   @if (session()->has('mustlogin'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('mustlogin') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
     <article class="blog-post p-3 border-bottom">
         <p class="blog-post-meta">{{ $story->created_at }}</p>
         <div class="mb-5">
@@ -32,12 +38,15 @@
 
         </div>
     </article>
+
     @if ($formcomment == 'active')
-        <form action="POST" wire:submit.prevent="savecomment">
-             <input id="x" type="hidden" name="content" value="{{ $value }}">
-            <trix-editor input="x"></trix-editor>
-            <button type="submit">save comment</button>
-        </form>
+    <form action="POST" wire:submit.prevent='savecomment'>
+        <div class="mb-3" wire:model.debounce.500ms="comment" wire:ignore>
+            <input id="body" type="hidden" name="content">
+            <trix-editor input="body"></trix-editor>
+        </div>
+        <button type="submit" class="btn btn-primary">send</button>
+    </form>
     @endif
 
     @foreach ($story->comment as $item)

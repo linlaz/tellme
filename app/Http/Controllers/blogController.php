@@ -97,7 +97,7 @@ class blogController extends Controller
         limit 3
         ");
         $category = Category::limit(10)->get();
-        return view('indexpage.blog', [
+        return view('indexpage.blogcontroller', [
             'trending' => $trending,
             'category' => $category
         ]);
@@ -110,6 +110,24 @@ class blogController extends Controller
         return view('writer.history', [
             'nowblog' => $find,
             'history' => $history
+        ]);
+    }
+
+    public function show(Request $request, $slug)
+    {
+        $next = Blog::with('category')->where('publish', 1)->inRandomOrder()->limit(2)->get();
+        $findblog = Blog::where('publish',1)->where('slug',$slug)->first();
+        $finds = views::where('visitor', $request->ip())->where('destination', 'blog')->where('destination_id', $findblog->id)->first();
+        if (is_null($finds)) {
+            $finds = Views::create([
+                'visitor' => $request->ip(),
+                'destination' => 'blog',
+                'destination_id' => $findblog->id
+            ]);
+        }
+        return view('indexpage.showblogcontroller', [
+            'blog' => $findblog,
+            'next' => $next
         ]);
     }
 

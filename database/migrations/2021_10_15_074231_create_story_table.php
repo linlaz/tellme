@@ -18,7 +18,7 @@ class CreateStoryTable extends Migration
             $table->id();
             $table->text('slug')->unique();
             $table->enum('choice', ['text', 'voice']);
-            $table->foreignId('user_id')->references('id')->on('users')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->foreignId('ip_user')->references('id')->on('i_pusers');
             $table->enum('publish', ['0', '1']);
             $table->text('stories')->nullable();

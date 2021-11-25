@@ -1,4 +1,12 @@
 <x-AppsLayout>
+
+    @if (session()->has('bloked'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('bloked') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="row g-5">
         <div class="col-md d-md-none d-lg-block d-lg-none d-xl-none">
             <div class="card ">
@@ -25,8 +33,7 @@
                                 <p class="card-text">
                                     <small class="text-muted">{{ $item->category->name }}</small>
                                 </p>
-                                {!! Str::limit(html_entity_decode(strip_tags($item->text)), 50, '...') !!}<a
-                                    href="blogs/{{ $item->slug }}">[read
+                                {!! Str::limit(html_entity_decode(strip_tags($item->text)), 50, '...') !!}<a href="blogs/{{ $item->slug }}">[read
                                     complete]</a>
 
                             </div>

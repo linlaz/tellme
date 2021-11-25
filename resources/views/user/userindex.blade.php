@@ -90,9 +90,16 @@
                                                     wire:click="edit('{{ $item->id }}')">Edit</button>
                                             @endcan
                                             @can('blok-user')
-                                                <button type="button" class="btn btn-secondary"
-                                                    onclick="confirm('Are you sure you want to blok the user ?') || event.stopImmediatePropagation()"
-                                                    wire:click="blok('{{ $item->id }}')">blokir</button>
+                                                @if ($item->active != '1')
+                                                    <button type="button" class="btn btn-secondary"
+                                                        onclick="confirm('Are you sure you want to blok the user ?') || event.stopImmediatePropagation()"
+                                                        wire:click="blok('{{ $item->id }}','1')">unblokir</button>
+                                                @else
+                                                    <button type="button" class="btn btn-secondary"
+                                                        onclick="confirm('Are you sure you want to blok the user ?') || event.stopImmediatePropagation()"
+                                                        wire:click="blok('{{ $item->id }}','0')">blokir</button>
+                                                @endif
+
                                             @endcan
                                             @can('delete-user')
                                                 <button type="button" class="btn btn-danger"

@@ -34,7 +34,7 @@ Route::get('/register', [userController::class, 'create'])->name('registers');
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware(['guest:' . config('fortify.guard')])->name('registers');
 Route::get('/blogs',[blogController::class,'showall'])->name('blogs');
-Route::get('/blogs/{slug}', [Showblogs::class, 'render'])->name('showblogs');
+Route::get('/blogs/{slug}', [blogController::class, 'show'])->name('showblogs');
 // user
 Route::group(['prefix' => 'dashboard',  'middleware' => 'auth:sanctum'], function () {
     //story

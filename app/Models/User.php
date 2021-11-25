@@ -31,6 +31,7 @@ class User extends Authenticatable
         'name',
         'password',
         'ip_user',
+        'active',
     ];
 
     /**
@@ -65,7 +66,7 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name'])
+            ->logOnly(['name','active'])
             ->useLogName('user');
     }
     public function story()

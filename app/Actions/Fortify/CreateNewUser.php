@@ -22,25 +22,8 @@ class CreateNewUser implements CreatesNewUsers
      * @param  Request $request
      * @return \App\Models\User
      */
-    protected $find;
-    public function __construct(Request $request)
-    {
-        $this->find = IPuser::where('ip_user', $request->ip())->first();
-        if (is_null($this->find)) {
-            $this->find = IPuser::create([
-                'ip_user' => $request->ip(),
-                'active' => '1'
-            ]);
-        }
-
-        if ($this->find->active != '1') {
-            return Redirect::to('addstoryguest')->send();
-        }
-    }
-
     public function create(array $input)
     {
-
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255', 'unique:users,name'],
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -52,6 +35,7 @@ class CreateNewUser implements CreatesNewUsers
         $user = User::create([
             'name' => $input['name'],
             'password' => Hash::make($input['password']),
+            'active' => '1',
             'ip_user' => $find->id,
         ]);
         $user->assignRole('user');

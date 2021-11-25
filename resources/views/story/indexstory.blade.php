@@ -15,9 +15,9 @@
                         {{ $item->views->where('destination', 'story')->count() }} || @if ($item->publish == '1'){{ 'publish' }}@else{{ 'draft' }}@endif.last update
                         {{ $item->updated_at }} | <i
                             class="ri-save-3-fill"></i>{{ $item->saves->where('user_id', Auth::id())->where('destination', 'story')->count() }}
-                        </>
                     </div>
                 @endcan
+
             </div>
             <div class="card-footer text-muted">
                 @if ($item->publish == 0)
@@ -37,7 +37,7 @@
                             title="edit your story"></a>
                     @endcan
                     @can('history-blog')
-                        <a href="/storyhistory/{{ $item->slug }}" type="button"
+                        <a href="/story/history/{{ $item->slug }}" type="button"
                             class="m-2 btn btn-info ri-file-history-fill" title="history story"></a>
                     @endcan
                 @endif
