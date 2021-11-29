@@ -85,4 +85,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(IPuser::class, 'ip_user');
     }
+    public function views()
+    {
+        return $this->hasMany(views::class, 'user_id');
+    }
 }

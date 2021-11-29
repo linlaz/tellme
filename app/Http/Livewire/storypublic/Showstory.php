@@ -13,36 +13,35 @@ use Illuminate\Support\Facades\Auth;
 
 class Showstory extends Component
 {
-    public $findip, $slug, $comment, $findstory;
+    public $findip, $story, $comment;
     public $formcomment = 'off';
 
     protected $listeners = ['success' => '$refresh'];
-
     public function mount(Request $request)
     {
-        $this->findip = $request->ip();
-        $this->findstory = Story::with('comment')->where('slug', $this->slug)->first();
+        $this->findip = IPuser::where('ip_user', $request->ip())->where('active', '1')->first();
+        $finds = views::where('visitor', $this->findip->id)->where('destination', 'story')->where('destination_id', $this->story->id)->first();
+        if (is_null($finds)) {
+            $finds = Views::create([
+                'visitor' => $this->findip->id,
+                'destination' => 'story',
+                'destination_id' => $this->story->id
+            ]);
+        }
     }
 
     public function render()
     {
-        // $findstory = Story::with('comment')->where('slug', $this->slug)->first();
-        $finds = views::where('visitor', $this->findip)->where('destination', 'story')->where('destination_id', $this->findstory->id)->first();
-        if (is_null($finds)) {
-            $finds = Views::create([
-                'visitor' => $this->findip,
-                'destination' => 'story',
-                'destination_id' => $this->findstory->id
-            ]);
-        }
+
         return view('indexpage.showstory', [
-            'story' => $this->findstory
+            'story' => $this->story
         ]);
     }
 
     public function addsave($id, $item)
     {
         if (Auth::guest()) {
+            $this->emit('success');
             return session()->flash('mustlogin', $item . ' unsuccessfully save. you must login');
         } else {
             $find = Save::where('user_id', Auth::user()->id)->where('destination', 'story')->where('destination_id', $id)->first();
@@ -56,7 +55,8 @@ class Showstory extends Component
         }
 
         if ($find) {
-            session()->flash('success', $item . ' successfully save');
+            $this->emit('success');
+            return session()->flash('success', $item . ' successfully save');
         }
     }
     public function unsave($id, $item)
@@ -65,8 +65,10 @@ class Showstory extends Component
         if (!is_null($find)) {
             $find->delete();
             session()->flash('delete', $item . ' successfully unsave');
+            $this->emit('success');
         } else {
             session()->flash('delete', 'sorry');
+            $this->emit('success');
         }
     }
     public function comment($cek)
@@ -76,12 +78,19 @@ class Showstory extends Component
 
     public function savecomment()
     {
+        // $this->validate();
         Comment::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => $this->findip->id,
             'subject' => $this->comment,
             'story_id' => $this->findstory->id
         ]);
         $this->formcomment = 'off';
+        $this->comment = '';
+    }
+    public function cancelcomment()
+    {
+        $this->formcomment = 'off';
+        $this->comment = '';
         $this->emit('success');
     }
 }

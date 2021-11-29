@@ -38,13 +38,14 @@
 
         </div>
     </article>
-
+    {{ $comment }}
     @if ($formcomment == 'active')
-    <form action="POST" wire:submit.prevent='savecomment'>
-        <div class="mb-3" wire:model.debounce.500ms="comment" wire:ignore>
+    <form action="POST" wire:submit='savecomment'>
+        <div class="mb-3" wire:model.debounce.350ms="comment" wire:ignore>
             <input id="body" type="hidden" name="content">
             <trix-editor input="body"></trix-editor>
         </div>
+          @error('comment') <span class="error">{{ $message }}</span> @enderror
         <button type="submit" class="btn btn-primary">send</button>
     </form>
     @endif
@@ -55,7 +56,7 @@
                 <div class="comment-footer">
                     <span class="date">{{ $item->created_at }}</span>
                 </div>
-                {{ $item->subject }}
+                {!! $item->subject !!}
             </div>
         </div>
     @endforeach

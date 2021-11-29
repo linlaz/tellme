@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-md-8 border-end">
-            @livewire('storypublic.showstory', ['slug' => $story])
+            @livewire('storypublic.showstory', ['story' => $story])
         </div>
         <div class="col-md">
             <div class="card d-sm-none d-none d-md-block">

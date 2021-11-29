@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Story;
+use App\Models\Views;
 use App\Models\IPuser;
 use Faker\Factory as Faker;
 use Illuminate\Support\Str;
@@ -37,7 +38,7 @@ class storyController extends Controller
     public function createguest()
     {
 
-        return view('indexpage.addstorycontroller')->with('warning','coba');
+        return view('indexpage.addstorycontroller')->with('warning', 'coba');
     }
     /**
      * Store a newly created resource in storage.
@@ -130,10 +131,21 @@ class storyController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($slug)
+    public function show($slug, Request $request)
     {
-        return view('indexpage.storycontroller',[
-            'story' => $slug
+        $story = Story::where('slug', $slug)->where('publish', "1")->first();
+        $findip = IPuser::where('ip_user', $request->ip())->where('active', '1')->first();
+        $finds = views::where('visitor', $findip->id)->where('destination', 'story')->where('destination_id', $story->id)->first();
+        if (is_null($finds)) {
+            $finds = Views::create([
+                'visitor' => $findip->id,
+                'destination' => 'story',
+                'destination_id' => $story->id
+            ]);
+        }
+
+        return view('indexpage.storycontroller', [
+            'story' => $story
         ]);
     }
     public function showhistory($slug)
