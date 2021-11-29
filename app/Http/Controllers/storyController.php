@@ -20,6 +20,7 @@ class storyController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
     public function index()
     {
         return view('story.index');
@@ -87,10 +88,7 @@ class storyController extends Controller
      */
     public function showAll()
     {
-        $blog = Blog::with('category')->where('publish', '1')->inRandomOrder()->limit(3)->get();
-        return view('welcome', [
-            'blog' => $blog
-        ]);
+        return view('welcome');
     }
     /**
      * Show the form for editing the specified resource.
@@ -145,7 +143,8 @@ class storyController extends Controller
         }
 
         return view('indexpage.storycontroller', [
-            'story' => $story
+            'story' => $story,
+            'ip_user' =>$findip->id,
         ]);
     }
     public function showhistory($slug)

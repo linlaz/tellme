@@ -13,26 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Showstory extends Component
 {
-    public $findip, $story, $comment;
+    public $story, $comment,$ip_user;
     public $formcomment = 'off';
 
     protected $listeners = ['success' => '$refresh'];
-    public function mount(Request $request)
-    {
-        $this->findip = IPuser::where('ip_user', $request->ip())->where('active', '1')->first();
-        $finds = views::where('visitor', $this->findip->id)->where('destination', 'story')->where('destination_id', $this->story->id)->first();
-        if (is_null($finds)) {
-            $finds = Views::create([
-                'visitor' => $this->findip->id,
-                'destination' => 'story',
-                'destination_id' => $this->story->id
-            ]);
-        }
-    }
-
     public function render()
     {
-
         return view('indexpage.showstory', [
             'story' => $this->story
         ]);
@@ -80,12 +66,13 @@ class Showstory extends Component
     {
         // $this->validate();
         Comment::create([
-            'user_id' => $this->findip->id,
+            'user_id' => $this->ip_user,
             'subject' => $this->comment,
-            'story_id' => $this->findstory->id
+            'story_id' => $this->story->id
         ]);
         $this->formcomment = 'off';
         $this->comment = '';
+        $this->emit('success');
     }
     public function cancelcomment()
     {

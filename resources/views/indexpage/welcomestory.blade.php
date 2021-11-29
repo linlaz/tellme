@@ -11,6 +11,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
         @foreach ($story as $item)
             <article class="card mb-3">
                 <div class="card-body">
@@ -48,3 +49,13 @@
     </article>
     @endforeach
     </div>
+
+    @push('script')
+        <script type="text/javascript">
+            window.onscroll = function(ev) {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                    window.livewire.emit('load-more');
+                }
+            };
+        </script>
+    @endpush

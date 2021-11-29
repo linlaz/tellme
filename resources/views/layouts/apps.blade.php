@@ -23,18 +23,7 @@
     <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
     @livewireStyles
-
-    <link rel="stylesheet" type="text/css" href="/dist/trix.css">
-    <style>
-        trix-toolbar .trix-button-group--file-tools {
-            display: none;
-        }
-
-        trix-toolbar .trix-button-group--block-tools {
-            display: none;
-        }
-
-    </style>
+    @stack('style')
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -104,14 +93,8 @@
 </body>
 @livewireScripts
 <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-<script type="text/javascript" src="/dist/trix.js"></script>
 <script>
     var clipboard = new ClipboardJS('.btn');
 </script>
-<script>
-    document.addEventlistener('trix-file-accept', function(e) {
-        e.preventDefault();
-    })
-</script>
-
+@stack('script')
 </html>

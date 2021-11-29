@@ -1,3 +1,14 @@
+@push('style')
+    <link rel="stylesheet" type="text/css" href="/dist/trix.css">
+    <style>
+        trix-toolbar .trix-button-group--file-tools {
+            display: none;
+        }
+        trix-toolbar .trix-button-group--block-tools {
+            display: none;
+        }
+    </style>
+@endpush
 <div>
    @if (session()->has('mustlogin'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -38,15 +49,15 @@
 
         </div>
     </article>
-    {{ $comment }}
     @if ($formcomment == 'active')
-    <form action="POST" wire:submit='savecomment'>
+    <form action="POST" wire:submit.prevent='savecomment'>
         <div class="mb-3" wire:model.debounce.350ms="comment" wire:ignore>
-            <input id="body" type="hidden" name="content">
+            <input id="body" type="hidden" name="comment">
             <trix-editor input="body"></trix-editor>
         </div>
           @error('comment') <span class="error">{{ $message }}</span> @enderror
         <button type="submit" class="btn btn-primary">send</button>
+        <button type="button" wire:click="cancelcomment" class="btn btn-danger">cancel</button>
     </form>
     @endif
 
@@ -61,4 +72,12 @@
         </div>
     @endforeach
 </div>
+@push('script')
+<script type="text/javascript" src="/dist/trix.js"></script>
+    <script>
+        document.addEventlistener('trix-file-accept', function(e) {
+            e.preventDefault();
+        })
+    </script>
+@endpush
 

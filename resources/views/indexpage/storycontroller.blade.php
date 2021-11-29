@@ -10,16 +10,10 @@
             </div>
         </div>
         <div class="col-md-8 border-end">
-            @livewire('storypublic.showstory', ['story' => $story])
+            @livewire('storypublic.showstory', ['story' => $story,'ip_user'=>$ip_user])
         </div>
         <div class="col-md">
-            <div class="card d-sm-none d-none d-md-block">
-                <div class="card-body">
-                    <p>ingin bercerita ??</p>
-                    <p>cerita ga nambah beban ke orang lain kok</p>
-                    <p>gasinnn aja <a href="/addstory">kesini</a></p>
-                </div>
-            </div>
+          <x-rightside></x-rightside>
         </div>
     </div>
 </x-apps-layout>

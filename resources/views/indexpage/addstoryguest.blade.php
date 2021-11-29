@@ -1,3 +1,16 @@
+@push('style')
+    <link rel="stylesheet" type="text/css" href="/dist/trix.css">
+    <style>
+        trix-toolbar .trix-button-group--file-tools {
+            display: none;
+        }
+
+        trix-toolbar .trix-button-group--block-tools {
+            display: none;
+        }
+
+    </style>
+@endpush
 <div>
     <form action="{{ route('storestoryguest') }}" method="POST">
         @csrf
@@ -23,3 +36,11 @@
         <button type="submit" class="btn btn-primary mt-2">add story</button>
     </form>
 </div>
+@push('script')
+<script type="text/javascript" src="/dist/trix.js"></script>
+    <script>
+        document.addEventlistener('trix-file-accept', function(e) {
+            e.preventDefault();
+        })
+    </script>
+@endpush
