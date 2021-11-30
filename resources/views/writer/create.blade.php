@@ -18,9 +18,9 @@
                     <div class="row mb-3">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Title Blog</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control " name="title"
-                                id="inputText" value="{{ old('title') }}">
-                          
+                            <input type="text" class="form-control " name="title" id="inputText"
+                                value="{{ old('title') }}">
+
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -32,20 +32,19 @@
                                     <option value="{{ $item->slug }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">subjek</label>
-                        <div class="col-sm-10">
-                            <textarea class="tinymce-editor" name="text" value="{{ old('text') }}"></textarea>
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
-                    </div>
+                        <div class="row mb-3">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">subjek</label>
+                            <div class="col-sm-10">
+                                <textarea class="tinymce-editor" name="text" value="{{ old('text') }}"></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
                 </form>
             </div>
         </div>
-
     </form>
 </x-app-layout>

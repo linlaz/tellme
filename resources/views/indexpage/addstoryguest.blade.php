@@ -29,10 +29,9 @@
         @else
             {{ 'asu' }}
         @endif
-
-        @auth
+        @guest
             <a href="{{ route('registers') }}" class="btn btn-secondary mt-2">buat akun</a>
-        @endauth
+        @endguest
         <button type="submit" class="btn btn-primary mt-2">add story</button>
     </form>
 </div>

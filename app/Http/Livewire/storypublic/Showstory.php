@@ -80,4 +80,9 @@ class Showstory extends Component
         $this->comment = '';
         $this->emit('success');
     }
+    public function deletecomment($id)
+    {
+        Comment::where('id',$id)->delete();
+        $this->emit('success');
+    }
 }

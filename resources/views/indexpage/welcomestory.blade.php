@@ -1,4 +1,4 @@
-    <div class="col-md-8 border-end">
+    <div class="col-md-8 border-end" wire:loading.delay.class="opacity-50">
         @if (session()->has('mustlogin'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('mustlogin') }}
@@ -13,7 +13,7 @@
         @endif
 
         @foreach ($story as $item)
-            <article class="card mb-3">
+            <article class="card mb-3" @if ($loop->last) id="last_record" @endif>
                 <div class="card-body">
                     <p class="blog-post-meta">{{ $item->created_at }}</p>
                     <div class="mb-3">
@@ -48,14 +48,26 @@
     </div>
     </article>
     @endforeach
+    @if ($loadAmount >= $totalRecords)
+        <p class="text-gray-800 font-bold text-2xl text-center my-10">No Remaining Records!</p>
+    @endif
     </div>
 
     @push('script')
-        <script type="text/javascript">
-            window.onscroll = function(ev) {
-                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                    window.livewire.emit('load-more');
-                }
-            };
+        <script>
+            const lastRecord = document.getElementById('last_record');
+            const options = {
+                root: null,
+                threshold: 1,
+                rootMargin: '0px'
+            }
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        @this.loadMore()
+                    }
+                });
+            });
+            observer.observe(lastRecord);
         </script>
     @endpush

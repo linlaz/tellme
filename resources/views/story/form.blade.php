@@ -31,9 +31,13 @@
             </div>
         </div>
     </form>
+    @push('script')
+        <script type="text/javascript" src="/dist/trix.js"></script>
     <script>
         document.addEventlistener('trix-file-accept', function(e) {
             e.preventDefault();
         })
     </script>
+    @endpush
+    
 </div>

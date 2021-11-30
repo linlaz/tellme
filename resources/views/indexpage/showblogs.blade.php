@@ -4,7 +4,7 @@
         <p class="blog-post-meta">{{ $blog->created_at }} | <a
                 href="/blogs?category={{ $blog->category->slug }}">{{ $blog->category->name }}</a> </p>
         <div class="mb-5">
-            <img src="https://source.unsplash.com/1600x900/?{{ $blog->category->name }}" class="img-fluid mb-3" alt="">
+            <img src="https://source.unsplash.com/1600x900/?{{ $blog->category->name }},{{ $blog->title }},random" class="img-fluid mb-3" alt="">
             {!! $blog->text !!}
         </div>
         <div>

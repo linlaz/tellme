@@ -9,34 +9,29 @@ use Livewire\Component;
 
 class Welcomestory extends Component
 {
-    public $limitPerPage = 3;
-
-    protected $listeners = [
-        'load-more' => 'loadMore'
-    ];
+    public $totalRecords;
+    public $loadAmount = 5;
 
     public function loadMore()
     {
-        $this->limitPerPage = $this->limitPerPage + 6;
+        $this->loadAmount += 5;
+    }
+
+    public function mount()
+    {
+        $this->totalRecords = Story::with('saves')->where('publish', '1')->count();
     }
 
     public function render()
     {
-        $users = Story::latest()->paginate($this->limitPerPage);
-        $this->emit('load-more');
-
-        return view('indexpage.welcomestory', ['story' => $users]);
+        return view('indexpage.welcomestory')
+            ->with(
+                'story',
+            Story::with('saves')->where('publish', '1')
+                    ->limit($this->loadAmount)
+                    ->get()
+            );
     }
-
-    // public function render()
-    // {
-    //     return view('indexpage.welcomestory', [
-    //         'story' => $this->readyToLoad
-    //             ? Story::where('publish',"1")->paginate(5)
-    //             : [],
-    //     ]);
-    // }
-
     public function addsave($id, $item)
     {
         if (Auth::guest()) {
