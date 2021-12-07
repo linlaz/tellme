@@ -41,10 +41,13 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item mx-3">
-                            <a class="nav-link btn" aria-current="page" href="/">Home</a>
+                            <a class="nav-link btn {{ Request::is('/') ? 'active' : '' }}" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link btn" href="{{ route('blogs') }}">blog</a>
+                            <a class="nav-link btn {{ Request::is('/blogs') ? 'active' : '' }}" href="{{ route('blogs') }}">blog</a>
+                        </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link btn {{ Request::is('/') ? 'active' : '' }}" href="{{ route('blogs') }}">suggestions</a>
                         </li>
                     </ul>
                     <div class="d-flex">
