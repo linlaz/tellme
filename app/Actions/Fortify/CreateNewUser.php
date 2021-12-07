@@ -5,9 +5,7 @@ namespace App\Actions\Fortify;
 use App\Models\User;
 use App\Models\IPuser;
 use Illuminate\Http\Request;
-use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 

@@ -41,35 +41,21 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item mx-3">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            <a class="nav-link btn" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link" href="{{ route('blogs') }}">blog</a>
+                            <a class="nav-link btn" href="{{ route('blogs') }}">blog</a>
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <ul class="navbar-nav">
-                            @if (Route::has('login'))
-                                @auth
-                                    <li class="nav-item mx-3">
-                                        <a class="btn btn-sm btn-outline-secondary"
-                                            href="{{ url('/dashboard') }}">Dashboard</a>
-                                    </li>
-                                @else
-                                    <li class="nav-item mx-3">
-                                        <a class="btn btn-sm btn-outline-secondary mx-2"
-                                            href="{{ route('login') }}">login</a>
-                                    </li>
-                                    @if (Route::has('register'))
-                                        <li class="nav-item mx-3">
-                                            <a class="btn btn-sm btn-outline-secondary"
-                                                href="{{ route('register') }}">register</a>
-                                        </li>
-                                    @endif
-                                @endauth
-                            @endif
+                        @auth
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ url('/dashboard') }}">Dashboard</a>
+                        @endauth
+                        @guest
+                            <a class="btn btn-sm btn-outline-secondary" href="/register">register</a>
+                            <a class="btn btn-sm btn-outline-primary mx-2" href="{{ route('login') }}">login</a>
+                        @endguest
 
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -97,4 +83,5 @@
     var clipboard = new ClipboardJS('.btn');
 </script>
 @stack('script')
+
 </html>

@@ -23,11 +23,12 @@ class userController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $faker = Faker::create();
         return view('auth.register',[
-            'name' => $faker->unique()->name()
+            'name' => $faker->unique()->name(),
+            'ip_user' => $request->ip()
         ]);
     }
 
