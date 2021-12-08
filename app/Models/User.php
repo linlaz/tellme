@@ -66,12 +66,12 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name','active'])
+            ->logOnly(['name', 'active'])
             ->useLogName('user');
     }
     public function story()
     {
-        return $this->hasMany(Story::class,'user_id');
+        return $this->hasMany(Story::class, 'user_id');
     }
     public function saves()
     {

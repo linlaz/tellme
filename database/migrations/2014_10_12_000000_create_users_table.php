@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email')->nullable();
             $table->string('password');
             $table->foreignId('ip_user')->references('id')->on('i_pusers');
             $table->enum('active',['1','0']);
