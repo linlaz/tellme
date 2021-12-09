@@ -16,7 +16,7 @@
                     </ol>
                     
                 </div>
-            @livewire('storypublic.addstoryguest');
+            @livewire('storypublic.addstoryguest')
         </div>
     </div>
 </x-apps-layout>

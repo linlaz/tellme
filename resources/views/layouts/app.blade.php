@@ -60,24 +60,23 @@
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
-
-        <div class="search-bar">
+        {{-- <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
-        </div><!-- End Search Bar -->
+        </div><!-- End Search Bar --> --}}
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
-                <li class="nav-item d-block d-lg-none">
+                {{-- <li class="nav-item d-block d-lg-none">
                     <a class="nav-link nav-icon search-bar-toggle " href="#">
                         <i class="bi bi-search"></i>
                     </a>
-                </li><!-- End Search Icon-->
+                </li><!-- End Search Icon--> --}}
 
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
 
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-bell"></i>
@@ -216,7 +215,7 @@
 
                     </ul><!-- End Messages Dropdown Items -->
 
-                </li><!-- End Messages Nav -->
+                </li><!-- End Messages Nav --> --}}
 
                 <li class="nav-item dropdown pe-3">
 
@@ -317,15 +316,15 @@
 
             @if (Auth::user()->hasRole(['writer', 'admin']) || Auth::user()->hasPermissionTo('add-blog'))
                 <li class="nav-item">
-                    <a class="nav-link @if(!Request::is('blog*'))collapsed @endif" href="{{ route('blog') }}">
+                    <a class="nav-link @if (!Request::is('blog*'))collapsed @endif" href="{{ route('blog') }}">
                         <i class="bi bi-files"></i>
-                        <span >blog</span>
+                        <span>blog</span>
                     </a>
                 </li>
             @endif
             @if (Auth::user()->hasRole(['writer', 'admin']) || Auth::user()->hasPermissionTo('delete-category'))
                 <li class="nav-item">
-                    <a class="nav-link @if(!Request::is('category'))collapsed @endif " href="{{ route('category') }}">
+                    <a class="nav-link @if (!Request::is('category'))collapsed @endif " href="{{ route('category') }}">
                         <i class="bx bxs-category"></i>
                         <span>Category</span>
                     </a>
@@ -346,14 +345,19 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link @if(!Request::is('user*'))collapsed @endif" href="{{ route('user') }}">
+                    <a class="nav-link @if (!Request::is('user*'))collapsed @endif" href="{{ route('user') }}">
                         <i class="ri-user-3-line"></i>
                         <span>User</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link @if(!Request::is('role*'))collapsed @endif" href="{{ route('aboutrole') }}">
+                    <a class="nav-link @if (!Request::is('role*'))collapsed @endif" href="{{ route('aboutrole') }}">
+                        <i class="bi bi-pen"></i>
+                        <span>Suggestions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @if (!Request::is('role*'))collapsed @endif" href="{{ route('aboutrole') }}">
                         <i class="bi bi-unlock"></i>
                         <span>role and permission</span>
                     </a>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Suggestions;
 use App\Http\Requests\StoreSuggestionsRequest;
 use App\Http\Requests\UpdateSuggestionsRequest;
+use App\Models\IPuser;
+use Illuminate\Http\Request;
 
 class SuggestionsController extends Controller
 {
@@ -15,7 +17,7 @@ class SuggestionsController extends Controller
      */
     public function index()
     {
-        //
+        return view('suggestions.index');
     }
 
     /**
@@ -34,9 +36,20 @@ class SuggestionsController extends Controller
      * @param  \App\Http\Requests\StoreSuggestionsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSuggestionsRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'suggestion' => ['required']
+        ]);
+        $findip = IPuser::where('ip_user',$request->ip())->first();
+        Suggestions::create([
+            'email' => $request->email,
+            'subject' => $request->suggestion,
+            'ipuser' => $findip->id
+        ]);
+
+        return back()->with('success','thanks for your suggestion');
+
     }
 
     /**

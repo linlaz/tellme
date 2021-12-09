@@ -8,6 +8,7 @@ use App\Http\Controllers\saveController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\storyController;
 use App\Http\Controllers\konsultasiController;
+use App\Http\Controllers\SuggestionsController;
 use App\Http\Livewire\blogspublic\Showblogs;
 use App\Http\Livewire\storypublic\Showstory;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
@@ -35,6 +36,8 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware(['guest:' . config('fortify.guard')])->name('registers');
 Route::get('/blogs',[blogController::class,'showall'])->name('blogs');
 Route::get('/blogs/{slug}', [blogController::class, 'show'])->name('showblogs');
+Route::get('/suggestions', [SuggestionsController::class, 'index'])->name('suggestion');
+Route::post('/suggestions', [SuggestionsController::class, 'store'])->name('addsuggestion');
 // user
 Route::group(['prefix' => 'dashboard',  'middleware' => 'auth:sanctum'], function () {
     //story

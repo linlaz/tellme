@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-md-8 border-end">
-            @livewire('storypublic.showstory', ['story' => $story,'ip_user'=>$ip_user])
+            @livewire('storypublic.showstory', ['story' => $story,'ip_user'=>$ip_user,'user_id'=>$user_id])
         </div>
         <div class="col-md">
           <x-rightside></x-rightside>

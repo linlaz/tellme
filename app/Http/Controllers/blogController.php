@@ -115,19 +115,18 @@ class blogController extends Controller
 
     public function show(Request $request, $slug)
     {
-        $next = Blog::with('category')->where('publish', 1)->inRandomOrder()->limit(2)->get();
-        $findblog = Blog::where('publish',1)->where('slug',$slug)->first();
-        $finds = views::where('visitor', $request->ip())->where('destination', 'blog')->where('destination_id', $findblog->id)->first();
+        $findblog = Blog::where('publish', 1)->where('slug', $slug)->first();
+        $findip = IPuser::where('ip_user', $request->ip())->first();
+        $finds = views::where('ipuser', $findip->id)->where('destination', 'blog')->where('destination_id', $findblog->id)->first();
         if (is_null($finds)) {
             $finds = Views::create([
-                'visitor' => $request->ip(),
+                'ipuser' => $findip->id,
                 'destination' => 'blog',
                 'destination_id' => $findblog->id
             ]);
         }
         return view('indexpage.showblogcontroller', [
-            'blog' => $findblog,
-            'next' => $next
+            'slug' => $slug
         ]);
     }
 

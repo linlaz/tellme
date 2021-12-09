@@ -132,11 +132,19 @@ class storyController extends Controller
     public function show($slug, Request $request)
     {
         $story = Story::where('slug', $slug)->where('publish', "1")->first();
+        if (is_null($story)) {
+            return redirect('/');
+        }
         $findip = IPuser::where('ip_user', $request->ip())->where('active', '1')->first();
-        $finds = views::where('visitor', $findip->id)->where('destination', 'story')->where('destination_id', $story->id)->first();
+        if (!is_null(Auth::user())) {
+            $iduser = Auth::user()->id;
+        } else {
+            $iduser = NULL;
+        }
+        $finds = views::where('ipuser', $findip->id)->where('destination', 'story')->where('destination_id', $story->id)->first();
         if (is_null($finds)) {
             $finds = Views::create([
-                'visitor' => $findip->id,
+                'ipuser' => $findip->id,
                 'destination' => 'story',
                 'destination_id' => $story->id
             ]);
@@ -144,7 +152,8 @@ class storyController extends Controller
 
         return view('indexpage.storycontroller', [
             'story' => $story,
-            'ip_user' =>$findip->id,
+            'ip_user' => $findip->id,
+            'user_id' => $iduser
         ]);
     }
     public function showhistory($slug)

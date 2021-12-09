@@ -26,30 +26,34 @@
                         @endisset
                     </div>
                     <div class="mt-3">
-                        @if (!is_null(Auth::id()))
+                        @auth
                             @if (!is_null($item->saves->where('user_id',
                             Auth::id())->where('destination','story')->where('destination_id',$item->id)->first()))
-                            <button type="button" wire:click="unsave('{{ $item->id }}','story')"
-                                class="btn btn-primary bi bi-save" title="save this story"></button>
-                        @else
+                            <button type="button" wire:click="unsave('{{ $item->id }}','story')" class="btn btn-primary bi bi-save"
+                                title="unsave this story"></button>
+                            @else
                             <button type="button" wire:click="addsave('{{ $item->id }}','story')"
                                 class="btn btn-outline-primary bi bi-save" title="save this story"></button>
-                        @endif
-                    @else
-                        <button type="button" wire:click="addsave('{{ $item->id }}','story')"
-                            class="btn btn-outline-primary bi bi-save" title="save this story"></button>
-        @endif
-        <a href="/story/{{ $item->slug }}" type="button" class="btn btn-outline-danger bx bxs-comment-detail"
-            title="comment this story"></a>
-        <i type="button" class="btn btn-outline-secondary bi bi-share"
-            data-clipboard-text="http://tellme.test/story/{{ $item->slug }}" title="share this story"
-            onclick="alert('this link copied for you')"></i>
-    </div>
-    </div>
-    </article>
-    @endforeach
+                            @endif
+                        @endauth
+
+                        @guest
+                            <button type="button" wire:click="addsave('{{ $item->id }}','story')"
+                                class="btn btn-outline-primary bi bi-save" title="save this story"></button>
+                        @endguest
+                        <a href="/story/{{ $item->slug }}" type="button" class="btn btn-outline-danger bx bxs-comment-detail"
+                            title="comment this story"></a>
+                        <i type="button" class="btn btn-outline-secondary bi bi-share"
+                            data-clipboard-text="http://tellme.test/story/{{ $item->slug }}" title="share this story"
+                            onclick="alert('this link copied for you')"></i>
+                    </div>
+                </div>
+            </article>
+        @endforeach
     @if ($loadAmount >= $totalRecords)
-        <p class="text-gray-800 font-bold text-2xl text-center my-10">No Remaining Records!</p>
+        <div class="alert alert-secondary text-center" role="alert">
+            No Remaining Records!
+        </div>
     @endif
     </div>
 

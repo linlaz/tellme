@@ -9,6 +9,13 @@
             display: none;
         }
 
+        trix-toolbar .trix-button-group--text-tools {
+            display: none;
+        }
+        
+        trix-toolbar .trix-button-group--history-tools {
+            display: none;
+        }
     </style>
 @endpush
 <div>
@@ -53,20 +60,32 @@
         </div>
     </article>
     @if ($formcomment == 'active')
-        <form action="POST" wire:submit.prevent='savecomment'>
+        <div class="alert alert-warning" role="alert">
+            <ol>
+                        <li>jangan menyebutkan identitas diri anda <strong> bila anda tidak ingin di ketahui</strong>
+                        </li>
+                        <li>jangan pernah langsung menghakimi apa yang kamu tidak tahu sepenuhnya</li>
+                        <li>Posisikan dirimu berada di kondisi sang penulis</li>
+                    </ol>
+        </div>
+        <form class="mb-3" action="POST" wire:submit.prevent='savecomment'>
             <div class="mb-3" wire:model.debounce.350ms="comment" wire:ignore>
-                <input id="body" type="hidden" name="comment">
-                <trix-editor input="body"></trix-editor>
+                <input id="comment" type="hidden" name="comment">
+                <trix-editor input="comment"></trix-editor>
             </div>
-            @error('comment') <span class="error">{{ $message }}</span> @enderror
-            <button type="submit" class="btn btn-primary">send</button>
+            @error('comment')
+            <div class="alert alert-danger" role="alert">
+                {{ $message }}
+            </div>
+            @enderror
+                     <button type="submit" class="btn btn-primary">send</button>
             <button type="button" wire:click="cancelcomment" class="btn btn-danger">cancel</button>
         </form>
     @endif
 
     @foreach ($story->comment as $item)
         <div class="card px-1">
-            <div class="card-body border-bottom">
+            <div class="card-body">
                 <div class="comment-footer">
                     <span class="date">{{ $item->created_at }}</span>
                     @auth

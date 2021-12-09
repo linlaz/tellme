@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
         $addrole = Permission::create([
             'name' => 'add-role'
         ]);
+        $deletecomment = Permission::create([
+            'name' => 'delete-comment'
+        ]);
         $editrole = Permission::create([
             'name' => 'edit-role'
         ]);

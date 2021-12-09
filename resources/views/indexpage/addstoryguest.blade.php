@@ -27,7 +27,9 @@
                 </div>
             </div>
         @else
-            {{ 'asu' }}
+            <div class="alert alert-dark" role="alert">
+               kami berusaha memperbaiki supaya tidak terjadi kerusakan di sistem
+            </div>
         @endif
         @guest
             <a href="{{ route('registers') }}" class="btn btn-secondary mt-2">buat akun</a>
@@ -36,7 +38,7 @@
     </form>
 </div>
 @push('script')
-<script type="text/javascript" src="/dist/trix.js"></script>
+    <script type="text/javascript" src="/dist/trix.js"></script>
     <script>
         document.addEventlistener('trix-file-accept', function(e) {
             e.preventDefault();

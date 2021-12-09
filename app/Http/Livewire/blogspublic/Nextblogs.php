@@ -7,31 +7,15 @@ use App\Models\Save;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-class Showallblogs extends Component
+class Nextblogs extends Component
 {
-    public $totalRecords;
-    public $loadAmount = 5;
-
-    public function loadMore()
-    {
-        $this->loadAmount += 5;
-    }
-
-    public function mount()
-    {
-        $this->totalRecords = Blog::with('saves', 'category')->where('publish', '1')->count();
-    }
     public function render()
     {
-        return view('indexpage.showallblogs')
-            ->with(
-                'blog',
-                Blog::with('saves', 'category')->where('publish', '1')
-                    ->limit($this->loadAmount)
-                    ->get()
-            );
+        $next = Blog::with('category','saves')->where('publish', 1)->inRandomOrder()->limit(5)->get();
+        return view('indexpage.nextblogs',[
+            'next' => $next,
+        ]);
     }
-
     public function addsave($id, $item)
     {
         if (Auth::guest()) {

@@ -47,7 +47,7 @@
                             <a class="nav-link btn {{ Request::routeIs('blogs') ? 'active' : '' }}" href="{{ route('blogs') }}">blog</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a class="nav-link btn {{ Request::is('/') ? 'active' : '' }}" href="{{ route('blogs') }}">suggestions</a>
+                            <a class="nav-link btn {{ Request::routeIs('suggestion') ? 'active' : '' }}" href="{{ route('suggestion') }}">suggestions</a>
                         </li>
                     </ul>
                     <div class="d-flex">
@@ -70,8 +70,7 @@
     </main>
 
     <footer class="container blog-footer">
-        <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a
-                href="https://twitter.com/mdo">@mdo</a>.</p>
+        <p>template  by <a href="https://twitter.com/mdo">@mdo</a>.powered by Lin.tech</p>
         <p>
             <a href="#">Back to top</a>
         </p>
@@ -86,5 +85,4 @@
     var clipboard = new ClipboardJS('.btn');
 </script>
 @stack('script')
-
 </html>

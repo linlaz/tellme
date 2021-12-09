@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Showstory extends Component
 {
-    public $story, $comment,$ip_user;
+    public $story, $comment,$ip_user,$user_id;
     public $formcomment = 'off';
 
     protected $listeners = ['success' => '$refresh'];
+
     public function render()
     {
         return view('indexpage.showstory', [
@@ -64,9 +65,13 @@ class Showstory extends Component
 
     public function savecomment()
     {
-        // $this->validate();
+        $this->validate([
+            'comment' => ['required']
+        ]);
+        
         Comment::create([
-            'user_id' => $this->ip_user,
+            'user_id' => $this->user_id,
+            'ipuser' => $this->ip_user,
             'subject' => $this->comment,
             'story_id' => $this->story->id
         ]);
