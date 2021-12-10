@@ -58,9 +58,11 @@ class SuggestionsController extends Controller
      * @param  \App\Models\Suggestions  $suggestions
      * @return \Illuminate\Http\Response
      */
-    public function show(Suggestions $suggestions)
+    public function showall()
     {
-        //
+        return view('suggestions.showall',[
+            'suggestions' => Suggestions::all()
+        ]);
     }
 
     /**

@@ -227,7 +227,7 @@
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
                             <h6>{{ Auth::user()->name }}</h6>
-                            <span>{{ Auth::user()->getRoleNames() }}</span>
+                           
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -269,14 +269,14 @@
 
             {{-- user --}}
             <li class="nav-item">
-                <a class="nav-link @if (!Request::is('dashboard*')) collapsed @endif" href="{{ route('dashboard') }}">
+                <a class="nav-link " href="{{ route('dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link @if (!Request::is('saved')) collapsed @endif" href="{{ route('save') }}">
+                <a class="nav-link " href="{{ route('save') }}">
                     <i class="bx bx-save"></i>
                     <span>save</span>
                 </a>
@@ -284,7 +284,7 @@
 
             @if (Auth::user()->hasRole(['user', 'konsultan', 'writer', 'admin']))
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('konsultasi')) collapsed @endif" href="{{ route('konsultasi') }}">
+                    <a class="nav-link " href="{{ route('konsultasi') }}">
                         <i class="bi bi-chat-left"></i>
                         <span>konsultasi</span>
                     </a>
@@ -300,7 +300,7 @@
 
             @if (Auth::user()->hasRole(['konsultan', 'admin']))
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('komunikasi')) collapsed @endif " href="{{ route('komunikasi') }}">
+                    <a class="nav-link " href="{{ route('komunikasi') }}">
                         <i class="bi bi-chat-left-quote"></i>
                         <span>komunikasi</span>
                     </a>
@@ -316,7 +316,7 @@
 
             @if (Auth::user()->hasRole(['writer', 'admin']) || Auth::user()->hasPermissionTo('add-blog'))
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('blog*'))collapsed @endif" href="{{ route('blog') }}">
+                    <a class="nav-link " href="{{ route('blog') }}">
                         <i class="bi bi-files"></i>
                         <span>blog</span>
                     </a>
@@ -324,7 +324,7 @@
             @endif
             @if (Auth::user()->hasRole(['writer', 'admin']) || Auth::user()->hasPermissionTo('delete-category'))
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('category'))collapsed @endif " href="{{ route('category') }}">
+                    <a class="nav-link " href="{{ route('category') }}">
                         <i class="bx bxs-category"></i>
                         <span>Category</span>
                     </a>
@@ -338,26 +338,26 @@
                 <li class="nav-heading">admin</li>
 
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('dashboardadmin')) collapsed @endif" href="{{ route('dashboardadmin') }}">
+                    <a class="nav-link "href="{{ route('dashboardadmin') }}">
                         <i class="bi bi-person-lines-fill"></i>
                         <span>Dashboard admin</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('user*'))collapsed @endif" href="{{ route('user') }}">
+                    <a class="nav-link " href="{{ route('user') }}">
                         <i class="ri-user-3-line"></i>
                         <span>User</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('role*'))collapsed @endif" href="{{ route('aboutrole') }}">
+                    <a class="nav-link" href="{{ route('adminsuggestions') }}">
                         <i class="bi bi-pen"></i>
                         <span>Suggestions</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @if (!Request::is('role*'))collapsed @endif" href="{{ route('aboutrole') }}">
+                    <a class="nav-link " href="{{ route('aboutrole') }}">
                         <i class="bi bi-unlock"></i>
                         <span>role and permission</span>
                     </a>

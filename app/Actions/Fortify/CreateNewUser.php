@@ -5,6 +5,7 @@ namespace App\Actions\Fortify;
 use App\Models\User;
 use App\Models\IPuser;
 use Illuminate\Http\Request;
+use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -23,15 +24,16 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255', 'unique:users,name'],
-            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'max:255', 'unique:users.name'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users.email'],
             'password' => $this->passwordRules(),
             'ip_user' => ['required'],
-            // 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
+            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
         $find = IPuser::where('ip_user', $input['ip_user'])->first();
         $user = User::create([
             'name' => $input['name'],
+            'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'active' => '1',
             'ip_user' => $find->id,

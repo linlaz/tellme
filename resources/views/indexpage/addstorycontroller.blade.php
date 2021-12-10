@@ -1,4 +1,4 @@
-<x-apps-layout>
+{{-- <x-apps-layout>
     <div class="row g-5 d-flex justify-content-center">
         <div class="col-md-8">
                 <div class="alert alert-warning" role="alert">
@@ -19,4 +19,5 @@
             @livewire('storypublic.addstoryguest')
         </div>
     </div>
-</x-apps-layout>
+</x-apps-layout> --}}
+

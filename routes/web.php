@@ -9,8 +9,6 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\storyController;
 use App\Http\Controllers\konsultasiController;
 use App\Http\Controllers\SuggestionsController;
-use App\Http\Livewire\blogspublic\Showblogs;
-use App\Http\Livewire\storypublic\Showstory;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
@@ -80,5 +78,6 @@ Route::group(['middleware' => ['role:admin', 'auth:sanctum']], function () {
     Route::get('/user', [userController::class, 'index'])->name('user');
     Route::get('/user/detailuser/{name}', [userController::class, 'show'])->name('detailuser');
     Route::get('/role', [roleController::class, 'index'])->name('aboutrole');
+    Route::get('/admin/suggestions', [SuggestionsController::class, 'showall'])->name('adminsuggestions');
 });
 //endmain

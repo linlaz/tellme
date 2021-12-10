@@ -118,7 +118,8 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name' => 'lintang lazuardi',
             'ip_user' => 1,
-            'password' => bcrypt('linlaz11')
+            'password' => bcrypt('linlaz11'),
+            'email' => 'lazuardilintang@apps.ipb.ac.id',
         ]);
         $user->assignRole('admin');
     }

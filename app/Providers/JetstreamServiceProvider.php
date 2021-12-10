@@ -37,8 +37,10 @@ class JetstreamServiceProvider extends ServiceProvider
             return redirect('registers');
         });
         Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('name', $request->name)->where('active','1')->first();
-
+            $user = User::where('name', $request->name)->where('active', '1')->first();
+            if(is_null($user)){
+                $user = User::where('email', $request->name)->where('active', '1')->first();
+            }
             if ($user && Hash::check($request->password, $user->password)) {
                 return $user;
             }
