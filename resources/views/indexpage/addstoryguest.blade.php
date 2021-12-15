@@ -34,7 +34,9 @@
         @guest
             <a href="{{ route('registers') }}" class="btn btn-secondary mt-2">buat akun</a>
         @endguest
+        @if($choice == 'text')
         <button type="submit" class="btn btn-primary mt-2">add story</button>
+        @endif
     </form>
 </div>
 @push('script')
