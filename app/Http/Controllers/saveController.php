@@ -16,7 +16,7 @@ class saveController extends Controller
     public function index()
     {
         
-        return view('save.index');
+        return view('save.indexsavecontroller');
     }
 
     /**

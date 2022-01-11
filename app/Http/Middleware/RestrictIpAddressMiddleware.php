@@ -29,6 +29,11 @@ class RestrictIpAddressMiddleware
         if ($ipuser->active != '1') {
             return Redirect::to('blocked')->send();
         }
+
+        if($ipuser->active == '1') {
+            $request->attributes->set('ipuser', $ipuser->id);
+        }
+        // dd($request);
         return $next($request);
     }
 }

@@ -14,9 +14,13 @@ class konsultasiController extends Controller
      */
     public function index()
     {
-        //
+        return view('konsultasi.indexkonsultasicontroller');
     }
 
+    public function indexkonsultasidashboard()
+    {
+        return view('dashboard.consul.indexconsulcontroller');
+    }
     /**
      * Show the form for creating a new resource.
      *

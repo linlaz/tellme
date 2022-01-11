@@ -2,48 +2,46 @@
 
 namespace App\Http\Livewire\story;
 
-use App\Models\Comment;
-use App\Models\Save;
+use App\Http\Livewire\action\AllAction;
 use App\Models\Story;
-use App\Models\views;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
-use Livewire\WithPagination;
-use Spatie\Activitylog\ActivityLogger;
+use Illuminate\Support\Facades\Crypt;
 
 class Indexstory extends Component
 {
-    use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    public $totalRecords;
+    public $loadAmount = 5;
     protected $listeners = [
-        'success' => '$refresh',
+        'success' => '$refresh'
     ];
-
-    public function render()
+    public function loadMore()
     {
-
-        if (Auth::user()->hasRole('admin')) {
-            $story = Story::with('views', 'saves')->paginate(3);
-        } else {
-            $story = Story::with('views', 'saves')->where('user_id', Auth::user()->id)->paginate(3);
-        }
-        return view('story.indexstory', [
-            'stories' => $story
-        ]);
+        $this->loadAmount += 5;
     }
 
-    public function actionp($action, Story $slug)
+    public function mount()
     {
-        if ($action != 'd') {
-            $slug->update([
-                'publish' => $action
-            ]);
-        } else {
-            $views = views::where('destination', 'story')->where('destination_id', $slug->id)->delete();
-            $views = Save::where('destination', 'story')->where('destination_id', $slug->id)->delete();
-            $comment = Comment::where('story_id',$slug->id)->delete();
-            $slug->delete();
-        }
-        $this->emit('success');
+        $this->totalRecords = Story::with('saves')->where('publish', '1')->count();
+    }
+    public function addsave($destinationid, $destination)
+    {
+        $destinationid = Crypt::decrypt($destinationid);
+        AllAction::addsave($destinationid, $destination);
+    }
+    public function unsave($destinationid, $destination)
+    {
+        $destinationid = Crypt::decrypt($destinationid);
+        AllAction::unsave($destinationid, $destination);
+    }
+    public function render()
+    {
+        return view('story.indexstorylivewire')
+            ->with(
+                'story',
+                Story::with('saves', 'comment')->where('publish', '1')
+                    ->limit($this->loadAmount)
+                    ->orderBy('created_at', 'asc')
+                    ->get()
+            );
     }
 }

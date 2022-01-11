@@ -23,7 +23,10 @@ class storyController extends Controller
 
     public function index()
     {
-        return view('story.index');
+        $story = Story::with('saves')->where('publish','1')->get();
+        return view('story.indexstorycontroller',[
+            'story' => $story
+        ]);
     }
 
     /**
@@ -47,38 +50,43 @@ class storyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
 
-        $faker = Faker::create();
-        $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
-        $find = Story::Where('slug', $slug)->first();
-        if ($find != null) {
-            while ($find->slug = $slug) {
-                $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
-            }
-        }
-        $ipuser = IPuser::where('ip_user', $request->ip())->first();
+     public function showdashboard()
+     {
+         return view('dashboard.showallstorycontroller');
+     }
 
-        if (!is_null(Auth::user())) {
-            $iduser = Auth::user()->id;
-        } else {
-            $iduser = NULL;
-        }
-        Story::create([
-            'slug' => $slug,
-            'choice' => $request->choice,
-            'user_id' => $iduser,
-            'publish' => '1',
-            'stories' => $request->story,
-            'ip_user' => $ipuser->id
-        ]);
-        if (is_null($iduser)) {
-            return redirect("/story/" . $slug);
-        } else {
-            return redirect('/dashboard');
-        }
-    }
+    // public function store(Request $request)
+    // {
+    //     $faker = Faker::create();
+    //     $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
+    //     $find = Story::Where('slug', $slug)->first();
+    //     if ($find != null) {
+    //         while ($find->slug = $slug) {
+    //             $slug = Str::slug($faker->unique()->word() . '-' . $faker->unique()->randomNumber(8, false) . '-' . $faker->unique()->sentence());
+    //         }
+    //     }
+    //     $ipuser = IPuser::where('ip_user', $request->ip())->first();
+
+    //     if (!is_null(Auth::user())) {
+    //         $iduser = Auth::user()->id;
+    //     } else {
+    //         $iduser = NULL;
+    //     }
+    //     Story::create([
+    //         'slug' => $slug,
+    //         'choice' => $request->choice,
+    //         'user_id' => $iduser,
+    //         'publish' => '1',
+    //         'stories' => $request->story,
+    //         'ip_user' => $ipuser->id
+    //     ]);
+    //     if (is_null($iduser)) {
+    //         return redirect("/story/" . $slug);
+    //     } else {
+    //         return redirect('/dashboard');
+    //     }
+    // }
 
     /**
      * Display the specified resource.
@@ -86,10 +94,7 @@ class storyController extends Controller
      * @param  \App\Models\story  $story
      * @return \Illuminate\Http\Response
      */
-    public function showAll()
-    {
-        return view('welcome');
-    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -129,31 +134,10 @@ class storyController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($slug, Request $request)
+    public function show($slug)
     {
-        $story = Story::where('slug', $slug)->where('publish', "1")->first();
-        if (is_null($story)) {
-            return redirect('/');
-        }
-        $findip = IPuser::where('ip_user', $request->ip())->where('active', '1')->first();
-        if (!is_null(Auth::user())) {
-            $iduser = Auth::user()->id;
-        } else {
-            $iduser = NULL;
-        }
-        $finds = views::where('ipuser', $findip->id)->where('destination', 'story')->where('destination_id', $story->id)->first();
-        if (is_null($finds)) {
-            $finds = Views::create([
-                'ipuser' => $findip->id,
-                'destination' => 'story',
-                'destination_id' => $story->id
-            ]);
-        }
-
-        return view('indexpage.storycontroller', [
-            'story' => $story,
-            'ip_user' => $findip->id,
-            'user_id' => $iduser
+        return view('story.showstorycontroller', [
+            'slug' => $slug
         ]);
     }
     public function showhistory($slug)

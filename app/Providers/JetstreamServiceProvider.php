@@ -42,6 +42,9 @@ class JetstreamServiceProvider extends ServiceProvider
                 $user = User::where('email', $request->name)->where('active', '1')->first();
             }
             if ($user && Hash::check($request->password, $user->password)) {
+                $user->update([
+                    'ip_user' => $request->attributes->get('ipuser')
+                ]);
                 return $user;
             }
         });

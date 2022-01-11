@@ -24,9 +24,22 @@ class blogController extends Controller
 
     public function index()
     {
-        return view('writer.blog');
+        $category = Category::limit(10)->get();
+        return view('blog.indexblogcontroller', [
+            'category' => $category
+        ]);
     }
-
+    public function showbycategory($slugcategory)
+    {
+        $category = Category::where('slug', $slugcategory)->first();
+        return view('blog.showbycategorycontroller', [
+            'slug' => $category->id
+        ]);
+    }
+    public function showdashboard()
+    {
+        return view('dashboard.showallblogcontroller');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +47,7 @@ class blogController extends Controller
      */
     public function create()
     {
-        return view('writer.create', [
+        return view('dashboard.blog.createblogcontroller', [
             'category' => Category::all()
         ]);
     }
@@ -64,6 +77,10 @@ class blogController extends Controller
             'text' => 'required'
         ]);
         $slug = Str::of($request->title)->slug('-') . rand();
+        $checkblog = Blog::where('slug', $slug)->first();
+        while ($checkblog != null) {
+            $checkblog = Blog::where('slug', $slug)->first();
+        }
         Blog::create([
             'title' => $request->title,
             'slug' => $slug,
@@ -74,7 +91,7 @@ class blogController extends Controller
             'publish' => 1
         ]);
 
-        return redirect('/blog');
+        return redirect('/dashboard/blog');
     }
 
     /**
@@ -83,25 +100,6 @@ class blogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function showall()
-    {
-
-        $trending = DB::select("
-        select v.destination_id, v.destination , b.title,b.slug,b.text
-        from views as v
-        join blogs as b
-        on v.destination_id = b.id
-        where destination = 'blog' 
-        group by v.destination_id,v.destination,b.title,b.slug,b.text
-        order by count(v.destination_id) desc
-        limit 3
-        ");
-        $category = Category::limit(10)->get();
-        return view('indexpage.blogcontroller', [
-            'trending' => $trending,
-            'category' => $category
-        ]);
-    }
 
     public function showhistory($slug)
     {
@@ -113,20 +111,12 @@ class blogController extends Controller
         ]);
     }
 
-    public function show(Request $request, $slug)
+    public function show($slug)
     {
-        $findblog = Blog::where('publish', 1)->where('slug', $slug)->first();
-        $findip = IPuser::where('ip_user', $request->ip())->first();
-        $finds = views::where('ipuser', $findip->id)->where('destination', 'blog')->where('destination_id', $findblog->id)->first();
-        if (is_null($finds)) {
-            $finds = Views::create([
-                'ipuser' => $findip->id,
-                'destination' => 'blog',
-                'destination_id' => $findblog->id
-            ]);
-        }
-        return view('indexpage.showblogcontroller', [
-            'slug' => $slug
+        $next = Blog::where('publish', '1')->where('slug', '!=', $slug)->limit(8)->get();
+        return view('blog.showblogcontroller', [
+            'slug' => $slug,
+            'next' => $next
         ]);
     }
 
@@ -136,11 +126,11 @@ class blogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function editdashboard($slug)
     {
         $find = Blog::where('slug', $slug)->first();
         if (!is_null($find)) {
-            return view('writer.edit', [
+            return view('dashboard.blog.editblogcontroller', [
                 'blog' => $find,
                 'category' => Category::all()
             ]);
@@ -154,7 +144,7 @@ class blogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function updatedashboard(Request $request)
     {
         $findcatergory = Category::where('slug', $request->name)->first();
         if (is_null($findcatergory)) {
@@ -171,16 +161,15 @@ class blogController extends Controller
             'title' => 'required|max:100',
             'text' => 'required'
         ]);
-        $slug = Str::of($request->title)->slug('-') . rand();
+
         $findblog = Blog::findorfail($request->id);
         $findblog->update([
             'title' => $request->title,
-            'slug' => $slug,
             'text' => $request->text,
             'category_id' => $findcatergory->id,
         ]);
 
-        return redirect('/blog');
+        return redirect('/dashboard/blog');
     }
 
 

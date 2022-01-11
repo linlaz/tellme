@@ -4,10 +4,7 @@ namespace App\Http\Livewire\blogspublic;
 
 use App\Models\Blog;
 use App\Models\Save;
-use App\Models\Views;
-use App\Models\IPuser;
 use Livewire\Component;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Showblogs extends Component

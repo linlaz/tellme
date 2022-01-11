@@ -15,7 +15,7 @@ class Save extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['user.name', 'destination','destination_id'])
+            ->logOnly(['user_id', 'destination','destination_id'])
             ->useLogName('save');
     }
     public function user()

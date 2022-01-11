@@ -105,6 +105,15 @@ class DatabaseSeeder extends Seeder
         $showstory = Permission::create([
             'name' => 'show-story'
         ]);
+        $showstorydashboard = Permission::create([
+            'name' => 'show-story-dashboard'
+        ]);
+        $showblogdashboard = Permission::create([
+            'name' => 'show-blog-dashboard'
+        ]);
+        $showkomunikasidashboard = Permission::create([
+            'name' => 'show-komunikasi-dashboard'
+        ]);
         $admin->givePermissionTo(['add-role', 'edit-role', 'delete-role', 'add-permission', 'edit-permission', 'delete-permission']);
 
         ModelsCategory::create([

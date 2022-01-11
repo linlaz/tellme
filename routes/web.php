@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\blogController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\roleController;
 use App\Http\Controllers\saveController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\storyController;
+use App\Http\Controllers\categoryController;
 use App\Http\Controllers\konsultasiController;
 use App\Http\Controllers\SuggestionsController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
@@ -22,52 +24,80 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 |
 */
 
-Route::get('/', [storyController::class, 'showAll'])->name('showAllStory');
+Route::get('/', [storyController::class, 'index'])->name('indexstory');
+// Route::get('/', function (Request $request) {
+//     return view('index', ['location' => $request->ipinfo->all]);
+// });
 Route::get('/blocked', function () {
     return view('welcome');
 });
+//story
 Route::get('/story/{slug}', [storyController::class, 'show'])->name('showstory');
-Route::get('/addstory', [storyController::class, 'createguest'])->name('addstoryguest');
-Route::post('/addstory', [storyController::class, 'store'])->name('storestoryguest');
+Route::get('/blog', [blogController::class, 'index'])->name('blogs');
+Route::get('/blog/category/{slug}', [blogController::class, 'showbycategory'])->name('showbycategoryblogs');
+Route::get('/blog/read/{slug}', [blogController::class, 'show'])->name('showblogs');
 Route::get('/register', [userController::class, 'create'])->name('registers');
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware(['guest:' . config('fortify.guard')])->name('registers');
-Route::get('/blogs',[blogController::class,'showall'])->name('blogs');
-Route::get('/blogs/{slug}', [blogController::class, 'show'])->name('showblogs');
+
 Route::get('/suggestions', [SuggestionsController::class, 'index'])->name('suggestion');
 Route::post('/suggestions', [SuggestionsController::class, 'store'])->name('addsuggestion');
 // user
-Route::group(['prefix' => 'dashboard',  'middleware' => 'auth:sanctum'], function () {
-    //story
-    Route::get('/', [storyController::class, 'index'])->name('dashboard');
-    Route::get('/story', [storyController::class, 'create'])->name('addstory');
-    Route::post('/addstory', [storyController::class, 'store'])->name('addstories');
-    Route::get('/edit/{slug}', [storyController::class, 'edit'])->name('editstory');
-    Route::post('/story', [storyController::class, 'update'])->name('editstories');
-    Route::get('/storyhistory/{slug}', [storyController::class, 'showhistory'])->name('historystory');
-    //endstory
 
-    Route::get('/save', [saveController::class, 'index'])->name('save');
-    Route::get('/konsultasi', [konsultasiController::class, 'index'])->name('konsultasi');
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/save', [saveController::class, 'index'])->name('indexsave');
+    Route::get('/consultation', [konsultasiController::class, 'index'])->name('indexkonsultasi');
+    Route::get('/profile', [userController::class, 'index'])->name('indexprofile');
+    Route::get('/settingprofile', [userController::class, 'setting'])->name('settingprofile');
+});
+
+Route::group(['prefix' => 'dashboard',  'middleware' => 'auth:sanctum'], function () {
+
+    Route::group(['prefix' => '/story', 'middleware' => ['role_or_permission:konsultan|writer|admin']], function () {
+        Route::get('/', [storyController::class, 'showdashboard'])->name('storydashboard');
+    });
+    Route::group(['prefix' => '/blog', 'middleware' => ['role_or_permission:writer|admin|add-blog']], function () {
+        Route::get('/', [blogController::class, 'showdashboard'])->name('blogdashboard');
+        Route::get('/create', [blogController::class, 'create'])->name('createblogdashboard');
+        Route::post('/create', [blogController::class, 'store'])->name('storeblogdashboard');
+        Route::get('/{slug}/edit', [blogController::class, 'editdashboard'])->name('editblogdashboard');
+        Route::post('/edit', [blogController::class, 'updatedashboard'])->name('editblogdashboard');
+    });
+    Route::group(['prefix' => '/category', 'middleware' => ['role_or_permission:writer|admin|add-category']], function () {
+        Route::get('/', [categoryController::class, 'showcategorydashboard'])->name('showcategorydashboard');
+    });
+    Route::group(['prefix' => '/komunikasi', 'middleware' => ['role_or_permission:konsultan|admin|add-category']], function () {
+        Route::get('/', [konsultasiController::class, 'indexkonsultasidashboard'])->name('indexkonsultasidashboard');
+    });
+    Route::group(['prefix' => '/admin', 'middleware' => ['role_or_permission:konsultan|admin|add-category']], function () {
+        Route::get('/', [SuggestionsController::class, 'indexdashboardadmin'])->name('indexdashboardadmin');
+    });
+    Route::group(['prefix' => '/role', 'middleware' => ['role_or_permission:konsultan|admin|add-category']], function () {
+        Route::get('/', [roleController::class, 'index'])->name('indexrole');
+    });
+    Route::group(['prefix' => '/User', 'middleware' => ['role_or_permission:konsultan|admin|add-category']], function () {
+        Route::get('/', [userController::class, 'indexdashboard'])->name('user');
+    });
+    // Route::get('/story', [storyController::class, 'create'])->name('addstory');
+    // Route::post('/addstory', [storyController::class, 'store'])->name('addstories');
+    // Route::get('/edit/{slug}', [storyController::class, 'edit'])->name('editstory');
+    // Route::post('/story', [storyController::class, 'update'])->name('editstories');
+    // Route::get('/storyhistory/{slug}', [storyController::class, 'showhistory'])->name('historystory');
+    //endstory
 });
 //enduser
 
-//konsultan
-Route::group(['middleware' => ['auth:sanctum', 'role:komunikasi|admin']], function () {
-    Route::get('/komunikasi', [konsultasiController::class, 'index'])->name('komunikasi');
-});
-//endkonsultan
 
 //writer
-Route::group(['prefix' => 'blog', 'middleware' => ['auth:sanctum', 'role_or_permission::writer|admin|add-blog|delete-category']], function () {
-    Route::get('/', [blogController::class, 'index'])->name('blog');
-    Route::get('/create', [blogController::class, 'create'])->name('createblog');
-    Route::post('/create/add', [blogController::class, 'store'])->name('createblogs');
-    Route::get('/edit/{slug}', [blogController::class, 'edit'])->name('editblog');
-    Route::get('/history/{slug}', [blogController::class, 'showhistory'])->name('historyblog');
-    Route::post('/edit/submit', [blogController::class, 'update'])->name('editblogs');
-    Route::get('/category', [blogController::class, 'categoryindex'])->name('category');
-});
+// Route::group(['prefix' => 'blogs', 'middleware' => ['auth:sanctum', 'role_or_permission::writer|admin|add-blog|delete-category']], function () {
+//     Route::get('/', [blogController::class, 'index'])->name('blog');
+//     Route::get('/create', [blogController::class, 'create'])->name('createblog');
+//     Route::post('/create/add', [blogController::class, 'store'])->name('createblogs');
+//     Route::get('/edit/{slug}', [blogController::class, 'edit'])->name('editblog');
+//     Route::get('/history/{slug}', [blogController::class, 'showhistory'])->name('historyblog');
+//     Route::post('/edit/submit', [blogController::class, 'update'])->name('editblogs');
+//     Route::get('/category', [blogController::class, 'categoryindex'])->name('category');
+// });
 //endwriter
 
 //admin

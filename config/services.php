@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'ipinfo' => [
+    'access_token' => env('IPINFO_SECRET'),
+    ],
+
 ];

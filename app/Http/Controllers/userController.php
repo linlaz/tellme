@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Faker\Factory as Faker;
+
 class userController extends Controller
 {
     /**
@@ -15,18 +16,25 @@ class userController extends Controller
      */
     public function index()
     {
-        return view('user.index');
+        return view('profile.profileindexcontroller');
     }
-
+    public function indexdashboard()
+    {
+        return view('dashboard.user.indexuserdashboardcontroller');
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function setting()
+    {
+        return view('profile.settingprofilecontroller');
+    }
     public function create(Request $request)
     {
         $faker = Faker::create();
-        return view('auth.register',[
+        return view('auth.register', [
             'name' => $faker->unique()->name(),
             'ip_user' => $request->ip()
         ]);
@@ -51,10 +59,10 @@ class userController extends Controller
      */
     public function show($name)
     {
-        $find = User::where('name',$name)->first();
-        return view('user.detailuser',[
+        $find = User::where('name', $name)->first();
+        return view('user.detailuser', [
             'user' => $find,
-            'activity' => Activity::where('causer_id',$find->id)->get()
+            'activity' => Activity::where('causer_id', $find->id)->get()
         ]);
     }
 

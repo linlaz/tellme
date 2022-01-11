@@ -21,3 +21,8 @@
     </div>
 </x-apps-layout>
 
+<form>
+    <select>
+        <option value="keamanan"> Kemanana<option>
+    <select>
+</form>
