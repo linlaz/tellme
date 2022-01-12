@@ -33,9 +33,10 @@ class userController extends Controller
     }
     public function create(Request $request)
     {
-        $faker = Faker::create();
+        // $faker = Faker::create();
         return view('auth.register', [
-            'name' => $faker->unique()->name(),
+            // 'name' => $faker->unique()->name(),
+            'name' => '',
             'ip_user' => $request->ip()
         ]);
     }
