@@ -25,6 +25,10 @@ class SuggestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indexdashboard()
+    {
+        return view('dashboard.suggestion.indexsuggestioncontroller');
+    }
     public function create()
     {
         //

@@ -42,7 +42,7 @@
                                 @if (is_null($blog->saves->where('user_id', Auth::id())->where('destination',
                                 'blog')->where('destination_id', $blog->id)->first()))
                                 <button type="button" class="btn btn-outline-primary"
-                                    wire:click="addsave('{{ $blog->id }}','blog')" title="save this blog"><i
+                                    wire:click="addsave('{{ Crypt::encrypt($blog->id) }}','blog')" title="save this blog"><i
                                         class="bi bi-save"></i>
                                     @if ($totalsave != 0)
                                         {{ $totalsave }}
@@ -50,7 +50,7 @@
                                 </button>
                             @else
                                 <button type="button" class="btn btn-primary"
-                                    wire:click="unsave('{{ $blog->id }}','blog')" title="unsave this blog"><i
+                                    wire:click="unsave('{{ Crypt::encrypt($blog->id) }}','blog')" title="unsave this blog"><i
                                         class="bi bi-save"></i>
                                     @if ($totalsave != 0)
                                         {{ $totalsave }}
@@ -60,7 +60,7 @@
                             @endauth
                             @guest
                                 <button type="button" class="btn btn-outline-primary"
-                                    wire:click="addsave('{{ $blog->id }}','blog')" title="save this blog"><i
+                                    wire:click="addsave('{{ Crypt::encrypt($blog->id) }}','blog')" title="save this blog"><i
                                         class="bi bi-save"></i>
                                 </button>
                             @endguest

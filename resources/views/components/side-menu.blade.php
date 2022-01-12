@@ -40,6 +40,7 @@
             <h4><i class="ri-quill-pen-fill  ms-3 me-2"></i> Suggestions</h4>
         </div>
     </a>
+
     @auth
         @php
             if (Auth::user()->hasPermissionTo('show-story-dashboard')) {

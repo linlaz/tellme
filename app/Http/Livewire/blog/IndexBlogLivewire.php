@@ -6,7 +6,7 @@ namespace App\Http\Livewire\blog;
 use Livewire\Component;
 use App\Http\Livewire\action\AllAction;
 use App\Models\Blog;
-
+use Illuminate\Support\Facades\Crypt;
 class IndexBlogLivewire extends Component
 {
     public $totalRecords;
@@ -24,11 +24,19 @@ class IndexBlogLivewire extends Component
     }
     public function addsave($destinationid, $destination)
     {
-        AllAction::addsave($destinationid, $destination);
+        $destinationid = Crypt::decrypt($destinationid);
+        $action = AllAction::addsave($destinationid, $destination);
+        if ($action) {
+            $this->emitSelf('success');
+        }
     }
     public function unsave($destinationid, $destination)
     {
-        AllAction::unsave($destinationid, $destination);
+        $destinationid = Crypt::decrypt($destinationid);
+        $action = AllAction::unsave($destinationid, $destination);
+        if ($action) {
+            $this->emitSelf('success');
+        }
     }
     public function render()
     {

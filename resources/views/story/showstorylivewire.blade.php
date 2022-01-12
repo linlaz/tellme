@@ -15,6 +15,7 @@
 
  
 @endsection --}}
+@section('title', "{{ Str::limit(html_entity_decode(strip_tags($story->stories)), 100) }}")
 @push('style')
     <link rel="stylesheet" type="text/css" href="/dist/trix.css">
     <style>
@@ -37,6 +38,7 @@
     </style>
 @endpush
 <div class="my-3">
+    
     @if (session()->has('success'))
         <x-session-success></x-session-success>
     @endif

@@ -11,6 +11,7 @@ use App\Http\Controllers\storyController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\konsultasiController;
 use App\Http\Controllers\SuggestionsController;
+use App\Models\Suggestions;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
@@ -77,6 +78,9 @@ Route::group(['prefix' => 'dashboard',  'middleware' => 'auth:sanctum'], functio
     });
     Route::group(['prefix' => '/User', 'middleware' => ['role_or_permission:konsultan|admin|add-category']], function () {
         Route::get('/', [userController::class, 'indexdashboard'])->name('user');
+    });
+    Route::group(['prefix' => '/suggestion', 'middleware' => ['role_or_permission:konsultan|admin|add-category']], function () {
+        Route::get('/', [SuggestionsController::class, 'indexdashboard'])->name('indexdashboard');
     });
     // Route::get('/story', [storyController::class, 'create'])->name('addstory');
     // Route::post('/addstory', [storyController::class, 'store'])->name('addstories');

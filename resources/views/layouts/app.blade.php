@@ -185,7 +185,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/admin/suggestion">
+                    <a class="nav-link" href="/dashboard/suggestion">
                         <i class="bi bi-pen"></i>
                         <span>Suggestions</span>
                     </a>

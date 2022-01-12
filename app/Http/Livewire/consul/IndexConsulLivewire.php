@@ -5,6 +5,7 @@ namespace App\Http\Livewire\consul;
 use App\Models\User;
 use App\Models\Message;
 use Livewire\Component;
+use Illuminate\Support\Facades\Crypt;
 
 class IndexConsulLivewire extends Component
 {
@@ -43,7 +44,7 @@ class IndexConsulLivewire extends Component
     public function SendMessage()
     {
         $data = new Message;
-        $data->message = $this->message;
+        $data->message = Crypt::encrypt($this->message);
         $data->user_id = auth()->id();
         $data->receiver_id = $this->sender->id;
         $data->save();
@@ -51,6 +52,7 @@ class IndexConsulLivewire extends Component
     }
     public function getUser($userId)
     {
+        $userId = Crypt::decrypt($userId);
         $user = User::find($userId);
         $this->sender = $user;
         $this->allmessages = Message::with('user')

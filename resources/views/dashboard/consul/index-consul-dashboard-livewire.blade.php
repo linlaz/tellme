@@ -67,7 +67,7 @@
                                             ->where('is_seen', false)
                                             ->get() ?? null;
                                 @endphp
-                                <a wire:click="getUser({{ $user->id }})"
+                                <a wire:click="getUser('{{ Crypt::encrypt($user->id) }}')"
                                     class="btn list-group-item list-group-item-action @if (isset($sender)) @if ($sender->id == $user->id) list-group-item-primary @else list-group-item-light @endif @endif  d-flex justify-content-between align-items-start">
 
                                     <div class="ms-2 me-auto">
@@ -103,8 +103,7 @@
                         @if (filled($allmessages))
                             @foreach ($allmessages as $mgs)
                                 <div class="single-message @if ($mgs->user_id == auth()->id()) sent @else received @endif">
-                                    {{-- <p class="font-weight-bolder my-0">{{ $mgs->user->name }}</p> --}}
-                                    {{-- {{ $mgs->message }} --}}{!! $mgs->message !!}
+                                    {!! Crypt::decrypt($mgs->message) !!}
                                     <br><small class="text-muted w-100">Sent <em>{{ $mgs->created_at }}</em></small>
                                 </div>
 
@@ -126,13 +125,6 @@
                             <form wire:submit.prevent="SendMessage">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        {{-- <div class=""
-                                            wire:model.debounce.350ms="message" wire:ignore.self>
-                                            <input id="message" type="hidden" class="form-control mb-3 input shadow-none w-100 d-inline-block" name="message">
-                                            <trix-editor input="message" 
-                                                placeholder="Cerita itu ga nambahin beban ke orang lain kok, jadi kalo butuh cerita aja ya?">
-                                            </trix-editor>
-                                        </div> --}}
                                         <input wire:model="message"
                                             class="form-control mb-3 input shadow-none w-100 d-inline-block"
                                             placeholder="Type a message" required>

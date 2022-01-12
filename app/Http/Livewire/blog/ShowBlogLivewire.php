@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\IPuser;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Livewire\action\AllAction;
 
 class ShowBlogLivewire extends Component
@@ -24,6 +25,7 @@ class ShowBlogLivewire extends Component
     }
     public function addsave($destinationid, $destination)
     {
+        $destinationid = Crypt::decrypt($destinationid);
         $action = AllAction::addsave($destinationid, $destination);
         if ($action) {
             $this->emitSelf('success');
@@ -32,6 +34,7 @@ class ShowBlogLivewire extends Component
 
     public function unsave($destinationid, $destination)
     {
+        $destinationid = Crypt::decrypt($destinationid);
         $action = AllAction::unsave($destinationid, $destination);
         if ($action) {
             $this->emitSelf('success');

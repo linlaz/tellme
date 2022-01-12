@@ -3,7 +3,9 @@
 Immanuel Kant --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="blog-header-logo text-dark" href="/">Tellme</a>
+        <a class="blog-header-logo text-dark" href="/">
+            <img src="{{ asset('img/logo1.svg') }}" style="height:50px;" class="img-fluid" alt="logo Tellme">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -38,6 +40,14 @@ Immanuel Kant --}}
                     <a class="nav-link active btn btn-xl" @if (Request::is('settingprofile'))style="color: #0aa2c0;" @endif aria-current="page"
                         href="/settingprofile">
                         Setting Profile</a>
+                </li>
+                <li class="nav-item mb-3">
+                    <a class="nav-link active btn btn-xl" @if (Request::is('suggestion'))style="color: #0aa2c0;" @endif aria-current="page" href="/suggestion">
+                        suggestion</a>
+                </li>
+                <li class="nav-item mb-3">
+                    <a class="nav-link active btn btn-xl" @if (Request::is('about'))style="color: #0aa2c0;" @endif aria-current="page" href="/about">
+                        About</a>
                 </li>
                 <div class="d-flex justify-content-center">
                     @auth
