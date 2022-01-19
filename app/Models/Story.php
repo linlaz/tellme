@@ -38,6 +38,6 @@ class Story extends Model
     }
     public function saves()
     {
-        return $this->hasMany(save::class, 'destination_id');
+        return $this->hasMany(Save::class, 'destination_id');
     }
 }

@@ -23,7 +23,7 @@ class Views extends Model
     }
     public function story()
     {
-        return $this->belongsTo(story::class, 'destination_id');
+        return $this->belongsTo(Story::class, 'destination_id');
     }
     public function blog()
     {
@@ -31,7 +31,7 @@ class Views extends Model
     }
     public function user()
     {
-        return $this->belongsTo(user::class, 'visitor');
+        return $this->belongsTo(User::class, 'visitor');
     }
     public function ipuser()
     {

@@ -20,7 +20,7 @@ class Save extends Model
     }
     public function user()
     {
-        return $this->belongsTo(user::class, 'id');
+        return $this->belongsTo(User::class, 'id');
     }
     public function story()
     {

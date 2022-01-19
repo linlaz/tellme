@@ -15,13 +15,7 @@ use Spatie\Activitylog\Models\Activity;
 
 class blogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
+   
     public function index()
     {
         $category = Category::limit(10)->get();
@@ -40,11 +34,7 @@ class blogController extends Controller
     {
         return view('dashboard.showallblogcontroller');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function create()
     {
         return view('dashboard.blog.createblogcontroller', [
@@ -52,12 +42,7 @@ class blogController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
         $findcatergory = Category::where('slug', $request->name)->first();
@@ -94,13 +79,7 @@ class blogController extends Controller
         return redirect('/dashboard/blog');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
-
+    
     public function showhistory($slug)
     {
         $find = Blog::where('slug', $slug)->first();
@@ -120,12 +99,7 @@ class blogController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
+   
     public function editdashboard($slug)
     {
         $find = Blog::where('slug', $slug)->first();
@@ -137,13 +111,7 @@ class blogController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
+   
     public function updatedashboard(Request $request)
     {
         $findcatergory = Category::where('slug', $request->name)->first();

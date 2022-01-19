@@ -78,7 +78,7 @@ class User extends Authenticatable
     }
     public function saves()
     {
-        return $this->hasMany(save::class, 'user_id');
+        return $this->hasMany(Save::class, 'user_id');
     }
     public function blog()
     {
@@ -90,6 +90,6 @@ class User extends Authenticatable
     }
     public function views()
     {
-        return $this->hasMany(views::class, 'user_id');
+        return $this->hasMany(Views::class, 'user_id');
     }
 }

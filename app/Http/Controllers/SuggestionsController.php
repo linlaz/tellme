@@ -10,36 +10,18 @@ use Illuminate\Http\Request;
 
 class SuggestionsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         return view('suggestions.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function indexdashboard()
     {
         return view('dashboard.suggestion.indexsuggestioncontroller');
     }
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreSuggestionsRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(Request $request)
     {
         $request->validate([
@@ -55,13 +37,7 @@ class SuggestionsController extends Controller
         return back()->with('success','thanks for your suggestion');
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Suggestions  $suggestions
-     * @return \Illuminate\Http\Response
-     */
+   
     public function showall()
     {
         return view('suggestions.showall',[
@@ -69,37 +45,4 @@ class SuggestionsController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Suggestions  $suggestions
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Suggestions $suggestions)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateSuggestionsRequest  $request
-     * @param  \App\Models\Suggestions  $suggestions
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateSuggestionsRequest $request, Suggestions $suggestions)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Suggestions  $suggestions
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Suggestions $suggestions)
-    {
-        //
-    }
 }
