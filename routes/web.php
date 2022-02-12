@@ -11,7 +11,6 @@ use App\Http\Controllers\storyController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\konsultasiController;
 use App\Http\Controllers\SuggestionsController;
-use App\Models\Suggestions;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*

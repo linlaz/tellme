@@ -71,7 +71,6 @@
                                  <tr>
                                      <th scope="col">Name</th>
                                      <th scope="col">role</th>
-                                     <th scope="col">ip user</th>
                                      <th scope="col">action</th>
                                  </tr>
                              </thead>
