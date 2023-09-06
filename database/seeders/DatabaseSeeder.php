@@ -125,10 +125,10 @@ class DatabaseSeeder extends Seeder
             'active' => "1"
         ]);
         $user = User::create([
-            'name' => 'lintang lazuardi',
+            'name' => 'admin',
             'ip_user' => 1,
-            'password' => bcrypt('linlaz11'),
-            'email' => 'lazuardilintang@apps.ipb.ac.id',
+            'password' => bcrypt('admin'),
+            'email' => 'admin@gmail.com',
         ]);
         $user->assignRole('admin');
     }

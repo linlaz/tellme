@@ -1,6 +1,5 @@
 <?php
 
-use Facade\Ignition\Tabs\Tab;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +15,7 @@ class CreateStoryTable extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
-            $table->text('slug')->unique();
+            $table->string('slug');
             $table->enum('choice', ['text', 'voice']);
             $table->foreignId('user_id')->nullable();
             $table->foreignId('ip_user')->references('id')->on('i_pusers');
